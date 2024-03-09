@@ -58,7 +58,7 @@ public class MainScene extends GameScene {
 
         System.out.println("Initialize Entity Manager");
 
-        player = eManager.createPlayer(world, 200, 300, 32, 32, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL | Constants.BIT_BLOCK | Constants.BIT_END));
+        player = eManager.createPlayer(world, 25, 100, 20, 20, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL | Constants.BIT_BLOCK | Constants.BIT_END));
         playerBody = player.getBody();
         eManager.addPlayer(player);
 

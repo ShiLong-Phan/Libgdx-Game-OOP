@@ -30,7 +30,7 @@ public class IOManager {
     }
 
     public boolean moveUp(){
-        if (Gdx.input.isKeyPressed(input.upArrowKey()))
+        if (Gdx.input.isKeyJustPressed(input.upArrowKey()))
             return true;
         return false;
     }

@@ -25,7 +25,7 @@ public class PlayerControlManager {
                 if (players.get(i) == null) continue;
                 else {
                     if(players.get(i).getBody().getLinearVelocity().y == 0)
-                        players.get(i).getBody().applyForceToCenter(0, 200, false);
+                        players.get(i).getBody().applyForceToCenter(0, 75, false);
                 }
             }
         }
