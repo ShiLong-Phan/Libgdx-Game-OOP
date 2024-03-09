@@ -13,7 +13,7 @@ import com.mygdx.game.Application;
 import static com.mygdx.game.utils.Constants.PPM;
 
 public class TiledObjectRender {
-    public static void parseTiledObjectLayer(World world, MapObjects objects) {
+    public static void parseTiledObjectLayer(World world, MapObjects objects, int layer) {
         for (MapObject object : objects) {
             Shape shape;
 
@@ -29,9 +29,33 @@ public class TiledObjectRender {
 
             Body body;
             BodyDef bdef = new BodyDef();
-            bdef.type = BodyDef.BodyType.StaticBody;
+            FixtureDef fixtureDef = new FixtureDef();
+            String userdata = "";
+            if(layer <= 2) {
+                bdef.type = BodyDef.BodyType.StaticBody;
+                fixtureDef.friction = 0f;
+                fixtureDef.shape = shape;
+                fixtureDef.density = 1.0f;
+                fixtureDef.filter.categoryBits = Constants.BIT_WALL;
+                fixtureDef.filter.maskBits = (Constants.BIT_PLAYER);
+                if (layer == 0){
+                    userdata = "ground";
+                } if (layer ==  1){
+                    userdata = "reset";
+                } if (layer ==  2){
+                    userdata = "terrain";
+                }
+            }else if (layer == 3){
+                bdef.type = BodyDef.BodyType.KinematicBody;
+                fixtureDef.friction = 0f;
+                fixtureDef.shape = shape;
+                fixtureDef.density = 1.0f;
+                fixtureDef.filter.categoryBits = Constants.BIT_BLOCK;
+                fixtureDef.filter.maskBits = (Constants.BIT_PLAYER);
+                userdata = "coin";
+            }
             body = world.createBody(bdef);
-            body.createFixture(shape, 1.0f);
+            body.createFixture(fixtureDef).setUserData(userdata);
             shape.dispose();
         }
     }

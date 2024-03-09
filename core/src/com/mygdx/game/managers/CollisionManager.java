@@ -25,4 +25,6 @@ public class CollisionManager {
     public boolean getLevelEnd(){
         return collisionHandler.getLevelCompletion();
     }
+    public boolean getOnGround(){return collisionHandler.getOnGround();}
+    public boolean getIfReset(){return collisionHandler.onReset();}
 }

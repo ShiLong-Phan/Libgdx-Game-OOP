@@ -1,10 +1,7 @@
 package com.mygdx.game.managers;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.game.Application;
 import com.mygdx.game.entities.*;
-import com.mygdx.game.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -270,22 +267,33 @@ public class EntityManager {
 
     public Body reCreatePlayer(Entity player) {
         this.RemovalStack.push(player);
+        this.player.remove(player);
         return createPlayer(player.getWorld(), player.getX(), player.getY(), player.getWidth(), player.getHeight(),
                 player.getcBits(), player.getmBits()).getBody();
     }
 
-    public void update() {
-        gsm.getPlayerControlManager().PlayerUpdate(player);
+
+    public void update(float delta) {
+        gsm.getPlayerControlManager().PlayerUpdate(player, delta, collisionManager.getOnGround());
+
+        if (delta >= 0) {
+            if (collisionManager.getIfReset()) {
+                for (int i = 0; i < player.size(); i++) {
+                    if (player.get(i) != null) {
+                        reCreatePlayer(player.get(i));
+                        while (!RemovalStack.empty()) {
+                            player.get(i).getWorld().destroyBody(RemovalStack.pop().getBody());
+                            System.out.println("deleted");
+                        }
+                    }
+                }
+            }
+        }
+
+
         aiManager.moveBody(kinematicEntities);
         if (collisionManager.checkCollision())
             aiManager.showEndPoint(kinematicEntities, 4.5f);
-    }
-
-    public void createBorders(final World world) {
-        this.createStaticEntity(world, 0, 0, Gdx.graphics.getWidth() * 10, 1, true, Constants.BIT_WALL, (short) (Constants.BIT_PLAYER | Constants.BIT_BLOCK), null);
-        this.createStaticEntity(world, 0, 0, 1, Gdx.graphics.getHeight() * 3, true, Constants.BIT_WALL, (short) (Constants.BIT_PLAYER | Constants.BIT_BLOCK), null);
-        this.createStaticEntity(world, Application.V_WIDTH / Application.SCALE, 0, 1, Gdx.graphics.getHeight() * 3, true, Constants.BIT_WALL, (short) (Constants.BIT_PLAYER | Constants.BIT_BLOCK), null);
-        this.createStaticEntity(world, 0, Application.V_HEIGHT / Application.SCALE, Gdx.graphics.getWidth() * 3, 1, true, Constants.BIT_WALL, (short) (Constants.BIT_PLAYER | Constants.BIT_BLOCK), null);
     }
 
 

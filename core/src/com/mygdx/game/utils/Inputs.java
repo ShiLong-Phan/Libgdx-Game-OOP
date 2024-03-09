@@ -24,6 +24,9 @@ public class Inputs {
     public int rKey(){
         return Input.Keys.R;
     }
+    public int AnyKey(){
+        return Input.Keys.ANY_KEY;
+    }
 
 
 

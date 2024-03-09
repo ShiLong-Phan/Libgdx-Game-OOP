@@ -7,13 +7,8 @@ public class staticEntity extends Entity {
     private Body body;
 
     public staticEntity(final World world, float x, float y, float width, float height, short cBits, short mBits, Body body) {
-        super(world, x,y,width,height, 1, true,cBits,mBits);
+        super(world, x,y,width,height, 1, true,cBits,mBits, body);
 
-        this.body = body;
     }
 
-    @Override
-    public Body getBody() {
-        return body;
-    }
 }

@@ -41,6 +41,12 @@ public class IOManager {
         return false;
     }
 
+    public boolean anyInputs(){
+        if (Gdx.input.isKeyPressed(input.AnyKey()))
+            return true;
+        return false;
+    }
+
 
 
 }

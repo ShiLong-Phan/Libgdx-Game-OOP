@@ -68,13 +68,14 @@ public class MainScene extends GameScene {
         dynamicBox = eManager.createDynamicEntity(world, 268.5f, 200, 30, 30, true, Constants.BIT_BLOCK, (short) (Constants.BIT_PLAYER | Constants.BIT_WALL | Constants.BIT_WALL), "block");
         endPlatform = eManager.createKinematicEntity(world, 525f, 50, 30, 30, true, Constants.BIT_END, Constants.BIT_PLAYER, "end");
         //border to box the game
-        eManager.createBorders(world);
 
         map = new TmxMapLoader().load("maps/map1.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 1/ Application.SCALE);
         tmr.setView(camera);
         tiledObjectRenderer = new TiledObjectRender();
-        tiledObjectRenderer.parseTiledObjectLayer(world, map.getLayers().get(1).getObjects());
+        tiledObjectRenderer.parseTiledObjectLayer(world, map.getLayers().get(1).getObjects(), 0);
+        tiledObjectRenderer.parseTiledObjectLayer(world, map.getLayers().get(2).getObjects(), 1);
+        tiledObjectRenderer.parseTiledObjectLayer(world, map.getLayers().get(3).getObjects(), 2);
     }
 
     @Override
@@ -85,9 +86,10 @@ public class MainScene extends GameScene {
         cameraUpdate();
         batch.setProjectionMatrix(camera.combined);
 
-        eManager.update();
+        eManager.update(delta);
         accumulator += delta;
         if (!collisionHandler.getLevelCompletion() && Gdx.input.isKeyJustPressed(Input.Keys.R) && accumulator > 0.5) {
+            musicPlayer.stop();
             gsm.setState(GameSceneManager.State.MAIN);
         }
 

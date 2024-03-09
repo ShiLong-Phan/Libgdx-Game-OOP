@@ -8,5 +8,4 @@ public final class Constants {
     public static final short BIT_BLOCK = 4;
     public static final short BIT_END = 8;
 
-
 }

@@ -10,8 +10,9 @@ public abstract class Entity {
     private short cBits, mBits;
     private int isStatic;
     private boolean fixedRotation;
+    private Body body;
 
-    public Entity(final World world, float x, float y, float width,  float height, int isStatic, boolean fixedRotation, short cBits, short mBits){
+    public Entity(final World world, float x, float y, float width,  float height, int isStatic, boolean fixedRotation, short cBits, short mBits, Body body){
         this.world = world;
         this.x = x;
         this.y = y;
@@ -21,9 +22,12 @@ public abstract class Entity {
         this.fixedRotation = fixedRotation;
         this.cBits = cBits;
         this.mBits = mBits;
+        this.body = body;
     }
 
-    public abstract Body getBody();
+    public Body getBody() {
+        return body;
+    }
 
     public World getWorld() {
         return world;
