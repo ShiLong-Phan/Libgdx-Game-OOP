@@ -1,17 +1,11 @@
 package com.mygdx.game.managers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.mygdx.game.entities.Entity;
-import com.mygdx.game.entities.Player;
 import com.mygdx.game.utils.Inputs;
-
-import java.util.ArrayList;
 
 public class IOManager {
 
-    private Inputs input;
+    private final Inputs input;
 
     public IOManager() {
         input = new Inputs();
