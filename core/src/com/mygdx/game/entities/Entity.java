@@ -1,6 +1,7 @@
 package com.mygdx.game.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 
 public abstract class Entity {
@@ -11,6 +12,8 @@ public abstract class Entity {
     private int isStatic;
     private boolean fixedRotation;
     private Body body;
+    private Shape shape;
+    private String entityData;
 
     public Entity(final World world, float x, float y, float width,  float height, int isStatic, boolean fixedRotation, short cBits, short mBits, Body body){
         this.world = world;
@@ -24,6 +27,18 @@ public abstract class Entity {
         this.mBits = mBits;
         this.body = body;
     }
+
+    public Entity(final World world, Shape shape, int isStatic, boolean fixedRotation, short cBits, short mBits, Body body, String userdata){
+        this.world = world;
+        this.shape = shape;
+        this.entityData = userdata;
+        this.isStatic = isStatic;
+        this.fixedRotation = fixedRotation;
+        this.cBits = cBits;
+        this.mBits = mBits;
+        this.body = body;
+    }
+
 
     public Body getBody() {
         return body;
@@ -53,32 +68,31 @@ public abstract class Entity {
         return x;
     }
 
-    public void setX(float x){
-        this.x = x;
-    }
+    public void setX(float x){this.x = x;}
 
     public float getHeight() {
         return height;
     }
 
-    public void setHeight(float height){
-        this.height = height;
-    }
+    public void setHeight(float height){this.height = height;}
 
     public short getcBits() {
         return cBits;
     }
 
-    public void setCategoryBit(short cBits){
-        this.cBits = cBits;
-    }
+    public void setCategoryBit(short cBits){this.cBits = cBits;}
 
     public short getmBits() {
         return mBits;
     }
 
-    public void setMaskBit(short mBits){
-        this.mBits = mBits;
-    }
+    public void setMaskBit(short mBits){this.mBits = mBits;}
 
+    public String getEntityData() {return entityData;}
+
+    public void setEntityData(String entityData) {this.entityData = entityData;}
+
+    public Shape getShape() {return shape;}
+
+    public void setShape(Shape shape) {this.shape = shape;}
 }

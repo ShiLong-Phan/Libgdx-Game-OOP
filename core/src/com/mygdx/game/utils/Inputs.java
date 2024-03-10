@@ -5,29 +5,29 @@ import com.badlogic.gdx.Input;
 
 public class Inputs {
 
-    public Inputs(){}
-
-    public int rightArrowKey(){
+    public static int rightArrowKey() {
         return Input.Keys.RIGHT;
     }
 
-    public int leftArrowKey(){
+    public static int leftArrowKey() {
         return Input.Keys.LEFT;
     }
 
-    public int upArrowKey(){
+    public static int upArrowKey() {
         return Input.Keys.UP;
     }
-    public int downArrowKey(){
+
+    public static int downArrowKey() {
         return Input.Keys.DOWN;
     }
-    public int rKey(){
+
+    public static int rKey() {
         return Input.Keys.R;
     }
-    public int AnyKey(){
+
+    public static int AnyKey() {
         return Input.Keys.ANY_KEY;
     }
-
 
 
 }

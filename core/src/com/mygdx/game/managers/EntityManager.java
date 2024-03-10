@@ -1,12 +1,21 @@
 package com.mygdx.game.managers;
 
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.objects.PolylineMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.entities.*;
+import com.mygdx.game.utils.Constants;
+import com.mygdx.game.utils.TiledObjectRender;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
 import static com.mygdx.game.utils.Constants.PPM;
+import static com.mygdx.game.utils.TiledObjectRender.createPolygon;
+import static com.mygdx.game.utils.TiledObjectRender.createRectangle;
 
 public class EntityManager {
     private static ArrayList<Entity> player = new ArrayList<>();
@@ -82,6 +91,106 @@ public class EntityManager {
         kinematicEntities.clear();
         System.out.println("Entities Disposed");
     }
+
+    public void parseTileLayerEntities(final World world, MapObjects objects, int layer) {
+        for (MapObject object : objects) {
+            Shape shape;
+
+            if (object instanceof PolylineMapObject) {
+                shape = TiledObjectRender.createPolyline((PolylineMapObject) object);
+            } else if (object instanceof RectangleMapObject) {
+                shape = createRectangle((RectangleMapObject) object);
+            } else if (object instanceof PolygonMapObject) {
+                shape = createPolygon((PolygonMapObject) object);
+            } else {
+                continue;
+            }
+
+
+
+            String userdata = "";
+            if (layer <= 2) {
+
+                if (layer == 0) {
+                    userdata = "ground";
+                }
+                if (layer == 1) {
+                    userdata = "reset";
+                }
+                if (layer == 2) {
+                    userdata = "terrain";
+                }
+                createStaticEntity(world, shape, Constants.BIT_WALL, Constants.BIT_PLAYER, userdata);
+
+            } else if (layer == 3) {
+                userdata = "token";
+                createKinematicEntity(world, shape, Constants.BIT_WALL, Constants.BIT_PLAYER, userdata);
+
+            }
+
+            if (layer <=2){
+            }
+
+            shape.dispose();
+
+        }
+    }
+
+    //map render entity creation
+    public void createStaticEntity(final World world, Shape shape, short cBits, short mBits, String userdata) {
+        Body body;
+        BodyDef bdef = new BodyDef();
+        FixtureDef fixtureDef = new FixtureDef();
+
+        fixtureDef.friction = 0f;
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+        bdef.type = BodyDef.BodyType.StaticBody;
+        fixtureDef.filter.categoryBits = cBits;
+        fixtureDef.filter.maskBits = mBits;
+        body = world.createBody(bdef);
+        body.createFixture(fixtureDef).setUserData(userdata);
+
+        staticEntity sEntity = new staticEntity(world, shape, cBits, mBits, body, userdata);
+        staticEntities.add(sEntity);
+    }
+
+    public void createDynamicEntity(final World world, Shape shape, short cBits, short mBits, String userdata) {
+        Body body;
+        BodyDef bdef = new BodyDef();
+        FixtureDef fixtureDef = new FixtureDef();
+
+        fixtureDef.friction = 0f;
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        fixtureDef.filter.categoryBits = cBits;
+        fixtureDef.filter.maskBits = mBits;
+        body = world.createBody(bdef);
+        body.createFixture(fixtureDef).setUserData(userdata);
+
+        dynamicEntity dEntity = new dynamicEntity(world, shape, cBits, mBits, body, userdata);
+        dynamicEntities.add(dEntity);
+    }
+
+    public void createKinematicEntity(final World world, Shape shape, short cBits, short mBits, String userdata) {
+        Body body;
+        BodyDef bdef = new BodyDef();
+        FixtureDef fixtureDef = new FixtureDef();
+
+        fixtureDef.friction = 0f;
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+        bdef.type = BodyDef.BodyType.KinematicBody;
+        fixtureDef.filter.categoryBits = cBits;
+        fixtureDef.filter.maskBits = mBits;
+        body = world.createBody(bdef);
+        body.createFixture(fixtureDef).setUserData(userdata);
+
+        kinematicEntity kEntity = new kinematicEntity(world, shape, cBits, mBits, body, userdata);
+        kinematicEntities.add(kEntity);
+    }
+
 
     public Body createBody(final World world, float x, float y, float width, float height,
                            int isStatic, boolean fixedRotation, short cBits, short mBits, String userdata) {
@@ -271,7 +380,6 @@ public class EntityManager {
         return createPlayer(player.getWorld(), player.getX(), player.getY(), player.getWidth(), player.getHeight(),
                 player.getcBits(), player.getmBits()).getBody();
     }
-
 
     public void update(float delta) {
         gsm.getPlayerControlManager().PlayerUpdate(player, delta, collisionManager.getOnGround());

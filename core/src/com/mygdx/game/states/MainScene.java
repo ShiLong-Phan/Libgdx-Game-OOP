@@ -65,8 +65,8 @@ public class MainScene extends GameScene {
         System.out.println("Initialize Entity Builder");
 
         //movingPlatform = platformBuilder.createKinematicBody(world, 415, 150, 255, 150, true, Constants.BIT_WALL, (short) (Constants.BIT_PLAYER | Constants.BIT_BLOCK), null);
-        dynamicBox = eManager.createDynamicEntity(world, 268.5f, 200, 30, 30, true, Constants.BIT_BLOCK, (short) (Constants.BIT_PLAYER | Constants.BIT_WALL | Constants.BIT_WALL), "block");
-        endPlatform = eManager.createKinematicEntity(world, 525f, 50, 30, 30, true, Constants.BIT_END, Constants.BIT_PLAYER, "end");
+        //dynamicBox = eManager.createDynamicEntity(world, 268.5f, 200, 30, 30, true, Constants.BIT_BLOCK, (short) (Constants.BIT_PLAYER | Constants.BIT_WALL | Constants.BIT_WALL), "block");
+        //sendPlatform = eManager.createKinematicEntity(world, 525f, 50, 30, 30, true, Constants.BIT_END, Constants.BIT_PLAYER, "end");
         //border to box the game
 
         map = new TmxMapLoader().load("maps/map1.tmx");

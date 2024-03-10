@@ -5,44 +5,41 @@ import com.mygdx.game.utils.Inputs;
 
 public class IOManager {
 
-    private final Inputs input;
-
     public IOManager() {
-        input = new Inputs();
     }
 
     public boolean moveRight(){
-        if (Gdx.input.isKeyPressed(input.rightArrowKey()))
+        if (Gdx.input.isKeyPressed(Inputs.rightArrowKey()))
             return true;
         return false;
     }
 
     public boolean moveLeft(){
-        if (Gdx.input.isKeyPressed(input.leftArrowKey()))
+        if (Gdx.input.isKeyPressed(Inputs.leftArrowKey()))
             return true;
         return false;
     }
 
     public boolean moveUp(){
-        if (Gdx.input.isKeyJustPressed(input.upArrowKey()))
+        if (Gdx.input.isKeyJustPressed(Inputs.upArrowKey()))
             return true;
         return false;
     }
 
     public boolean nextLevel(){
-        if (Gdx.input.isKeyPressed(input.downArrowKey()))
+        if (Gdx.input.isKeyPressed(Inputs.downArrowKey()))
             return true;
         return false;
     }
 
     public boolean restartStage(){
-        if(Gdx.input.isKeyPressed(input.rKey()))
+        if(Gdx.input.isKeyPressed(Inputs.rKey()))
             return true;
         return false;
     }
 
     public boolean anyInputs(){
-        if (Gdx.input.isKeyPressed(input.AnyKey()))
+        if (Gdx.input.isKeyPressed(Inputs.AnyKey()))
             return true;
         return false;
     }
