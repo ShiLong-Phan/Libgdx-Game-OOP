@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="45" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="160">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="45" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="169">
  <tileset firstgid="1" source="assets/goodly.tsx"/>
  <tileset firstgid="257" source="assets/water.tsx"/>
  <layer id="1" name="Tile Layer 1" width="45" height="30">
   <data encoding="base64" compression="zlib">
-   eJzNmFFuwjAMhlPBJF4ZDxPwAt0J2E6AdpaOE2y7/lIRi1+W7bhNU/pLv6DFJR9u4riEMK8u0R8j3SYvSV+Zz+n3Lkk5Zm/MnFoy80o5v2TmbfRr9I6dR54u+jv6lo7X0dfwPOZzeNSAffQBfEwxP9G/0X9w3SHFz6EmegPHWO9awcj/1ty9D9PWug07pnuP5vOAhDm3+PFcqbYCj8Txrlw/Zo+RxvQw0j07CzwSx+eAMXKSxiRhTaL7TTk7NXdb19dSnxOeA6xFmE9tztVkXjvjPHNsLuYphb9ryrmqidempUiqkZIxfkj9mEp9/po0vlWnpfpM67/mPbDyyLmstYTMbbD3rFLl9jxtfWh9Ef++GtwXg9Vaxxozr2+1asGYcYjZW6tJWs9bIm8vPLZnpvxMOW80li69XiGuU2I9kvb6sUJm6m34MwD20rfwfCEzseZ66WOorwbeY+3n+fTuJ0N7/hVj6KWtzdyzSq5W55hfnMwSB/Z21LdqvSvGlDAjx46Nyxmt78HngJPBbH3uNe8pcdwhz2qeazGm5L/Gf71NQfM=
+   eJzNmFFuwjAMhlPBJF4ZDxPwAt0J2E6AdpaOE2y7/lIRa78823HapvSXfgHFbT7cxHEJYV5dot8Guk1ekj4y39PvXZJyzN6YOWXxrB0xNbVSji85z9vo5+gdO448XfRn9A2OXcPjmM/hrwbsow/gY4r5iv6O/oHzDim+VOt8yD810Rv4jPWuFYz8L83d+zBtrduwz3Tv0XwekDDnFj8eG6utwCNxvCrnD9ljpDE9jHTPzgKPxPFeMEZO0pgkrEl0vylnp+Zu6/xa6nPCc4C1CPOpzbmazN4175ljczFPKfxdU85VTbw2LUVSjZSM8SX1Yyr1+WvS+Fadluozrf+a98DKI+ey1hIyt8Hes8Yqt+dp60Pri/j1anBfDFZrHWvMvL7VqgVDxiHm0v5M63nHyNsLD+2ZKT9TzhuNpUuvV4jrlFiPpL1+qJCZehv+DIC99C08XshMrLle+hjqq4H3WPt5Pr37SWnPv2IMvbS1mXtWydXqHPOTk1niwN6O+latd8WYMczIsWPjckbrOvgccDKYre+95j0ljlvyrOY5F2PG/Nf4CwLsQfc=
   </data>
  </layer>
  <objectgroup id="3" name="Collision Layer">
@@ -212,6 +212,20 @@
   </object>
   <object id="159" x="1440" y="320">
    <polyline points="0,0 -416,0 -416,-64 -512,-64 -512,-160"/>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="Collection Layer">
+  <object id="162" x="1280" y="384" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="166" x="1376" y="640" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="167" x="1344" y="96" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="168" x="384" y="224" width="32" height="32">
+   <ellipse/>
   </object>
  </objectgroup>
 </map>

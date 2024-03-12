@@ -1,5 +1,6 @@
 package com.mygdx.game.managers;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.entities.*;
+import com.mygdx.game.interfaces.entityBuilder;
 import com.mygdx.game.utils.Constants;
 import com.mygdx.game.utils.TiledObjectRender;
 
@@ -17,7 +19,7 @@ import static com.mygdx.game.utils.Constants.PPM;
 import static com.mygdx.game.utils.TiledObjectRender.createPolygon;
 import static com.mygdx.game.utils.TiledObjectRender.createRectangle;
 
-public class EntityManager {
+public class EntityManager implements entityBuilder {
     private static ArrayList<Entity> player = new ArrayList<>();
     private static ArrayList<Entity> staticEntities = new ArrayList<>();
     private static ArrayList<Entity> kinematicEntities = new ArrayList<>();
@@ -107,7 +109,6 @@ public class EntityManager {
             }
 
 
-
             String userdata = "";
             if (layer <= 2) {
 
@@ -126,9 +127,6 @@ public class EntityManager {
                 userdata = "token";
                 createKinematicEntity(world, shape, Constants.BIT_WALL, Constants.BIT_PLAYER, userdata);
 
-            }
-
-            if (layer <=2){
             }
 
             shape.dispose();
@@ -192,6 +190,7 @@ public class EntityManager {
     }
 
 
+    //creating custom entities
     public Body createBody(final World world, float x, float y, float width, float height,
                            int isStatic, boolean fixedRotation, short cBits, short mBits, String userdata) {
 
@@ -349,6 +348,7 @@ public class EntityManager {
     }
 
 
+    //player creation
     public Player createPlayer(final World world, float x, float y, float width, float height, short cBits, short mBits) {
         BodyDef def = new BodyDef();
         def.position.set(x / PPM, y / PPM);
@@ -369,26 +369,25 @@ public class EntityManager {
         Player player = new Player(world, x, y, width, height, cBits, mBits, bod);
 
         this.player.add(player);
-        System.out.println("Player Entity Created");
 
         return player;
     }
 
-    public Body reCreatePlayer(Entity player) {
+    //upon landing in reset zone recreatePlayer at starting location
+    private void recreatePlayer(Entity player) {
         this.RemovalStack.push(player);
         this.player.remove(player);
-        return createPlayer(player.getWorld(), player.getX(), player.getY(), player.getWidth(), player.getHeight(),
+        createPlayer(player.getWorld(), player.getX(), player.getY(), player.getWidth(), player.getHeight(),
                 player.getcBits(), player.getmBits()).getBody();
     }
 
-    public void update(float delta) {
+    public void update(float delta, SpriteBatch batch) {
         gsm.getPlayerControlManager().PlayerUpdate(player, delta, collisionManager.getOnGround());
-
         if (delta >= 0) {
             if (collisionManager.getIfReset()) {
                 for (int i = 0; i < player.size(); i++) {
                     if (player.get(i) != null) {
-                        reCreatePlayer(player.get(i));
+                        recreatePlayer(player.get(i));
                         while (!RemovalStack.empty()) {
                             player.get(i).getWorld().destroyBody(RemovalStack.pop().getBody());
                             System.out.println("deleted");
@@ -397,7 +396,10 @@ public class EntityManager {
                 }
             }
         }
-
+        for (Entity e: player){
+            if(e != null)
+                e.render(batch);
+        }
 
         aiManager.moveBody(kinematicEntities);
         if (collisionManager.checkCollision())

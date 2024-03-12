@@ -56,13 +56,11 @@ public class MainScene extends GameScene {
                 /*drawContacts*/false
         );
 
-        System.out.println("Initialize Entity Manager");
 
         player = eManager.createPlayer(world, 25, 100, 20, 20, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL | Constants.BIT_BLOCK | Constants.BIT_END));
         playerBody = player.getBody();
         eManager.addPlayer(player);
 
-        System.out.println("Initialize Entity Builder");
 
         //movingPlatform = platformBuilder.createKinematicBody(world, 415, 150, 255, 150, true, Constants.BIT_WALL, (short) (Constants.BIT_PLAYER | Constants.BIT_BLOCK), null);
         //dynamicBox = eManager.createDynamicEntity(world, 268.5f, 200, 30, 30, true, Constants.BIT_BLOCK, (short) (Constants.BIT_PLAYER | Constants.BIT_WALL | Constants.BIT_WALL), "block");
@@ -72,10 +70,10 @@ public class MainScene extends GameScene {
         map = new TmxMapLoader().load("maps/map1.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 1/ Application.SCALE);
         tmr.setView(camera);
-        tiledObjectRenderer = new TiledObjectRender();
-        tiledObjectRenderer.parseTiledObjectLayer(world, map.getLayers().get(1).getObjects(), 0);
-        tiledObjectRenderer.parseTiledObjectLayer(world, map.getLayers().get(2).getObjects(), 1);
-        tiledObjectRenderer.parseTiledObjectLayer(world, map.getLayers().get(3).getObjects(), 2);
+        //for(int i = 0; i < map.getLayers().size(); i++) {
+        for(int i = 0; i < 3; i++) {
+            gsm.geteManager().parseTileLayerEntities(world, map.getLayers().get(i+1).getObjects(), i);
+        }
     }
 
     @Override
@@ -85,8 +83,8 @@ public class MainScene extends GameScene {
 
         cameraUpdate();
         batch.setProjectionMatrix(camera.combined);
-
-        eManager.update(delta);
+        batch.begin();
+        eManager.update(delta, batch);
         accumulator += delta;
         if (!collisionHandler.getLevelCompletion() && Gdx.input.isKeyJustPressed(Input.Keys.R) && accumulator > 0.5) {
             musicPlayer.stop();
@@ -97,7 +95,7 @@ public class MainScene extends GameScene {
             musicPlayer.stop();
             gsm.setState(GameSceneManager.State.END);
         }
-
+        batch.end();
     }
 
     @Override

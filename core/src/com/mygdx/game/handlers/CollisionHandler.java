@@ -16,8 +16,6 @@ public class CollisionHandler implements ContactListener {
         }
 
         if(fa.getUserData() == "reset" || fb.getUserData() == "reset"){
-            System.out.println("new");
-
             onReset = true;
         }
 

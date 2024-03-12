@@ -1,5 +1,7 @@
 package com.mygdx.game.entities;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -14,6 +16,7 @@ public abstract class Entity {
     private Body body;
     private Shape shape;
     private String entityData;
+    private Texture tex;
 
     public Entity(final World world, float x, float y, float width,  float height, int isStatic, boolean fixedRotation, short cBits, short mBits, Body body){
         this.world = world;
@@ -67,6 +70,7 @@ public abstract class Entity {
     public float getX() {
         return x;
     }
+    public abstract void render(SpriteBatch batch);
 
     public void setX(float x){this.x = x;}
 
@@ -95,4 +99,16 @@ public abstract class Entity {
     public Shape getShape() {return shape;}
 
     public void setShape(Shape shape) {this.shape = shape;}
+
+    public void disposeTexture(){
+        tex.dispose();
+    }
+
+    public void setTex(Texture tex) {
+        this.tex = tex;
+    }
+
+    public Texture getTex() {
+        return tex;
+    }
 }

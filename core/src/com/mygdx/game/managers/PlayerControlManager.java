@@ -49,15 +49,12 @@ public class PlayerControlManager {
         int horizontalForce = 0, verticalForce = 0;
 
         if (gsm.getIOManager().moveLeft()) { //move left
-            System.out.println("Player Move Left");
             horizontalForce -= 1;
         }
         if (gsm.getIOManager().moveRight()) { //move right
-            System.out.println("Player Move Right");
             horizontalForce += 1;
         }
         if (gsm.getIOManager().moveUp()) {
-            System.out.println("Player Move Up");
             for (int i = 0; i < players.size(); i++) {
                 if (players.get(i) == null) continue;
                 else {
