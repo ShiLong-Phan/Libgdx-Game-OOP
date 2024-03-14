@@ -23,6 +23,7 @@ public class Player extends Entity{
     public Player(final World world, float x, float y, float width, float height, short cBits, short mBits, Body body) {
         super(world, x,y,width,height, 2, true,cBits, mBits, body);
 
+        //resize img
         Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("sprites/char.png"));
         pixmap = new Pixmap((int) width, (int) height,pixmapOriginal.getFormat());
         pixmap.drawPixmap(pixmapOriginal,0,0,pixmapOriginal.getWidth(),pixmapOriginal.getHeight(),0,0, pixmap.getWidth(), pixmap.getHeight());
@@ -33,9 +34,6 @@ public class Player extends Entity{
     }
 
 
-    public void render(SpriteBatch batch){
-        batch.draw(super.getTex(), super.getBody().getPosition().x * PPM - tex.getWidth()/2,
-                super.getBody().getPosition().y * PPM - tex.getHeight()/2);
-    }
+
 
 }

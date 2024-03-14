@@ -6,6 +6,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import static com.mygdx.game.utils.Constants.PPM;
+
 public abstract class Entity {
 
     private final World world;
@@ -70,7 +72,6 @@ public abstract class Entity {
     public float getX() {
         return x;
     }
-    public abstract void render(SpriteBatch batch);
 
     public void setX(float x){this.x = x;}
 
@@ -110,5 +111,12 @@ public abstract class Entity {
 
     public Texture getTex() {
         return tex;
+    }
+
+    public void render(SpriteBatch batch){
+        if(tex != null) {
+            batch.draw(tex, body.getPosition().x * PPM - tex.getWidth() / 2,
+                    body.getPosition().y * PPM - tex.getHeight() / 2);
+        }
     }
 }
