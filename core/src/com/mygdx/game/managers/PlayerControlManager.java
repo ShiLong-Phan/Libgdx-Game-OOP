@@ -59,7 +59,7 @@ public class PlayerControlManager {
                 if (players.get(i) == null) continue;
                 else {
                     if (onGround == true)
-                        players.get(i).getBody().setLinearVelocity(players.get(i).getBody().getLinearVelocity().x, 5);
+                        players.get(i).getBody().setLinearVelocity(players.get(i).getBody().getLinearVelocity().x, 6.5f);
                 }
             }
         }

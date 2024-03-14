@@ -1,5 +1,8 @@
 package com.mygdx.game.managers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Application;
 import com.mygdx.game.states.*;
 
@@ -14,6 +17,7 @@ public class GameSceneManager {
     private EntityManager eManager;
     private PlayerControlManager playerControlManager;
     private IOManager ioManager;
+    private Texture backgroundTexture;
 
 
     public enum State {
@@ -83,8 +87,8 @@ public class GameSceneManager {
         return eManager;
     }
 
-
     public IOManager getIOManager() {
         return ioManager;
     }
+
 }

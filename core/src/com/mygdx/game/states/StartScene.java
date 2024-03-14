@@ -3,6 +3,7 @@ package com.mygdx.game.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -41,6 +42,7 @@ public class StartScene extends GameScene {
     private Stage stage;
     private Vector2 vec;
     private float btnWidth = 50, btnHeight = 70;
+    private Texture backgroundTexture;
 
     public StartScene(GameSceneManager gsm) {
         super(gsm);
@@ -71,10 +73,9 @@ public class StartScene extends GameScene {
 
         generator.dispose();
 
-
+        //buttons
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = font2;
@@ -90,13 +91,19 @@ public class StartScene extends GameScene {
             }});
          
         button.setPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
-
-        vec = new Vector2();
         stage.addActor(button);
 
+        //vector to detect click position
+        vec = new Vector2();
 
-        //
-
+        //resize bg image
+        Pixmap pixmap;
+        Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("skybackground.png"));
+        pixmap = new Pixmap( Gdx.graphics.getWidth(), (int) Gdx.graphics.getHeight(),pixmapOriginal.getFormat());
+        pixmap.drawPixmap(pixmapOriginal,0,0,pixmapOriginal.getWidth(),pixmapOriginal.getHeight(),0,0, pixmap.getWidth(), pixmap.getHeight());
+        backgroundTexture = new Texture(pixmap);
+        pixmap.dispose();
+        pixmapOriginal.dispose();
 
     }
 
@@ -128,7 +135,7 @@ public class StartScene extends GameScene {
         //font1.draw(batch, layout1, Gdx.graphics.getWidth()/2-layout1.width/2,y*6);
         //font2.draw(batch, layout2, Gdx.graphics.getWidth()/2-layout2.width/2,y*5);
         //font3.draw(batch, layout3, Gdx.graphics.getWidth()/2-layout3.width/2,y*1.5f);
-
+        batch.draw(backgroundTexture,0,0);
         batch.end();
 
         stage.act();
