@@ -23,10 +23,10 @@ public class StartScene extends GameScene {
     private Texture tex;
 
 
-    private BitmapFont font1,font2,font3;
+    private BitmapFont font1, font2, font3;
     private String text1 = "MY GAME", text2 = "TESTING", text3 = "Click anywhere to continue";
-    private int fontSize =70, fontSize2 = 40, fontSize3 = 32;
-    private GlyphLayout layout1,layout2,layout3;
+    private int fontSize = 70, fontSize2 = 40, fontSize3 = 32;
+    private GlyphLayout layout1, layout2, layout3;
 
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
@@ -34,7 +34,7 @@ public class StartScene extends GameScene {
     private TextButton button;
     private Stage stage;
     private Vector2 vec;
-    private float btnWidth = 50, btnHeight = 70;
+    private float btnWidth = 100, btnHeight = 70;
     private Texture backgroundTexture;
 
     public StartScene(GameSceneManager gsm) {
@@ -75,15 +75,16 @@ public class StartScene extends GameScene {
         textButtonStyle.fontColor = Color.WHITE;
 
         button = new TextButton("Play Game", textButtonStyle);
-        button.setSize(btnWidth,btnHeight);
+        button.setSize(btnWidth, btnHeight);
         button.setScale(Application.SCALE);
-        button.addListener(new ClickListener(){
+        button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //gsm.setState(GameSceneManager.State.MAIN);
-            }});
-         
-        button.setPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+            }
+        });
+
+        button.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
         stage.addActor(button);
 
         //vector to detect click position
@@ -92,8 +93,8 @@ public class StartScene extends GameScene {
         //resize bg image
         Pixmap pixmap;
         Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("skybackground.png"));
-        pixmap = new Pixmap( Gdx.graphics.getWidth(), (int) Gdx.graphics.getHeight(),pixmapOriginal.getFormat());
-        pixmap.drawPixmap(pixmapOriginal,0,0,pixmapOriginal.getWidth(),pixmapOriginal.getHeight(),0,0, pixmap.getWidth(), pixmap.getHeight());
+        pixmap = new Pixmap(Gdx.graphics.getWidth(), (int) Gdx.graphics.getHeight(), pixmapOriginal.getFormat());
+        pixmap.drawPixmap(pixmapOriginal, 0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(), 0, 0, pixmap.getWidth(), pixmap.getHeight());
         backgroundTexture = new Texture(pixmap);
         pixmap.dispose();
         pixmapOriginal.dispose();
@@ -102,33 +103,32 @@ public class StartScene extends GameScene {
 
     @Override
     public void update(float delta) {
-        if(Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
+        if (Gdx.input.isTouched()) {
             vec.x = Gdx.input.getX();
             vec.y = Gdx.input.getY();
-            if(vec.x > button.getX() - btnWidth / 2 && vec.x < button.getX() + btnWidth / 2 &&
-                    vec.y > button.getY() - btnHeight / 2 && vec.y < button.getY() + btnHeight / 2)
-            //System.out.println(Gdx.input.getX());
-            //System.out.println(Gdx.input.getY());
-            //change scene
-            System.out.println("Scene Changed\n");
-            musicPlayer.stop();
-            gsm.setState(GameSceneManager.Scene.MAIN);
+            if (vec.x > button.getX() - btnWidth && vec.x < button.getX() + btnWidth &&
+                    vec.y > button.getY() - btnHeight && vec.y < button.getY() + btnHeight) {
 
+                //change scene
+                System.out.println("Scene Changed\n");
+                musicPlayer.stop();
+                gsm.setState(GameSceneManager.Scene.MAIN);
+            }
 
         }
     }
 
     @Override
     public void render() {
-        float x = (Gdx.graphics.getWidth() + layout1.width)/2;
-        float y = Gdx.graphics.getHeight()/10;
-        ScreenUtils.clear(new Color(0,0,0f,0f));
+        float x = (Gdx.graphics.getWidth() + layout1.width) / 2;
+        float y = Gdx.graphics.getHeight() / 10;
+        ScreenUtils.clear(new Color(0, 0, 0f, 0f));
         batch.begin();
         //write text
         //font1.draw(batch, layout1, Gdx.graphics.getWidth()/2-layout1.width/2,y*6);
         //font2.draw(batch, layout2, Gdx.graphics.getWidth()/2-layout2.width/2,y*5);
         //font3.draw(batch, layout3, Gdx.graphics.getWidth()/2-layout3.width/2,y*1.5f);
-        batch.draw(backgroundTexture,0,0);
+        batch.draw(backgroundTexture, 0, 0);
         batch.end();
 
         stage.act();
@@ -139,9 +139,12 @@ public class StartScene extends GameScene {
     @Override
     public void dispose() {
         System.out.println("Scene disposed");
-        font1.dispose();;
-        font2.dispose();;
-        font3.dispose();;
+        font1.dispose();
+        ;
+        font2.dispose();
+        ;
+        font3.dispose();
+        ;
         stage.dispose();
     }
 }

@@ -34,7 +34,6 @@ public class MainScene extends GameScene {
     private Texture backgroundTexture;
 
 
-
     public MainScene(GameSceneManager gsm) {
         super(gsm);
 
@@ -58,18 +57,18 @@ public class MainScene extends GameScene {
         gsm.getEntityManager().addPlayer(player);
 
         map = new TmxMapLoader().load("maps/map1.tmx");
-        tmr = new OrthogonalTiledMapRenderer(map, 1/ Application.SCALE);
+        tmr = new OrthogonalTiledMapRenderer(map, 1 / Application.SCALE);
         tmr.setView(camera);
         //for(int i = 0; i < map.getLayers().size(); i++) {
-        for(int i = 0; i < map.getLayers().size()-1; i++) {
-            gsm.getEntityManager().parseTileLayerEntities(world, map.getLayers().get(i+1).getObjects(), i);
+        for (int i = 0; i < map.getLayers().size() - 1; i++) {
+            gsm.getEntityManager().parseTileLayerEntities(world, map.getLayers().get(i + 1).getObjects(), i);
         }
 
         //resize bg image
         Pixmap pixmap;
         Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("skybackground.png"));
-        pixmap = new Pixmap( Gdx.graphics.getWidth(), (int) Gdx.graphics.getHeight(),pixmapOriginal.getFormat());
-        pixmap.drawPixmap(pixmapOriginal,0,0,pixmapOriginal.getWidth(),pixmapOriginal.getHeight(),0,0, pixmap.getWidth(), pixmap.getHeight());
+        pixmap = new Pixmap(Gdx.graphics.getWidth(), (int) Gdx.graphics.getHeight(), pixmapOriginal.getFormat());
+        pixmap.drawPixmap(pixmapOriginal, 0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(), 0, 0, pixmap.getWidth(), pixmap.getHeight());
         backgroundTexture = new Texture(pixmap);
         pixmap.dispose();
         pixmapOriginal.dispose();
@@ -78,14 +77,14 @@ public class MainScene extends GameScene {
 
     @Override
     public void update(float delta) {
+
         world.step(1 / 75f, 6, 2); //just use 6 and 2
-        //player.inputUpdate();
 
         cameraUpdate();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         //draw background
-        batch.draw(backgroundTexture,0,0);
+        batch.draw(backgroundTexture, 0, 0);
 
         //update all entities
         gsm.getEntityManager().update(delta, batch);
@@ -98,13 +97,7 @@ public class MainScene extends GameScene {
             gsm.setState(GameSceneManager.Scene.MAIN);
         }
         //if stage completed go to next scene
-        if (gsm.getEntityManager().getPlayer().get(0).getTokens() == 0 && accumulator > 0.5) {
-            end = true;
-            if (end == true) {
-                musicPlayer.stop();
-                gsm.setState(GameSceneManager.Scene.END);
-            }
-        }
+
 
     }
 
@@ -112,24 +105,30 @@ public class MainScene extends GameScene {
     public void render() {
         ScreenUtils.clear(new Color(0, 0, 0f, 1f));
 
+
         update(Gdx.graphics.getDeltaTime());
         tmr.render();
         b2dr.render(world, camera.combined.scl(Constants.PPM));
+        if (gsm.getEntityManager().getPlayer().get(0).getTokens() == 0 && accumulator > 0.5) {
+            musicPlayer.stop();
+            gsm.setState(GameSceneManager.Scene.END);
+        }
 
+        if (end == true && accumulator > 2) {
+
+        }
     }
 
     @Override
     public void dispose() {
 
         System.out.println("Scene Disposed");
-        world.dispose();
-        b2dr.dispose();
         gsm.getEntityManager().dispose();
         tmr.dispose();
         map.dispose();
+        world.dispose();
+        b2dr.dispose();
     }
-
-
 
 
 }

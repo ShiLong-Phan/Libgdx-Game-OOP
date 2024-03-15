@@ -16,16 +16,17 @@ public class EndScene extends GameScene {
     private Texture tex;
 
 
-    private BitmapFont font1,font2,font3;
+    private BitmapFont font1, font2, font3;
     private SpriteBatch batch;
     private String text1 = "END SCREEN", text2 = "TESTING", text3 = "Click anywhere to close";
-    private int fontSize =70, fontSize2 = 40, fontSize3 = 32;
-    private GlyphLayout layout1,layout2,layout3;
+    private int fontSize = 70, fontSize2 = 40, fontSize3 = 32;
+    private GlyphLayout layout1, layout2, layout3;
 
 
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
+    private float accumulator = 0;
 
     public EndScene(GameSceneManager gsm) {
         super(gsm);
@@ -65,7 +66,8 @@ public class EndScene extends GameScene {
 
     @Override
     public void update(float delta) {
-        if(Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
+        accumulator += delta;
+        if ((Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) && accumulator > 1) {
             //change scene
             System.out.println("Scene End\n");
             musicPlayer.stop();
@@ -76,13 +78,13 @@ public class EndScene extends GameScene {
 
     @Override
     public void render() {
-        float x = (Gdx.graphics.getWidth() + layout1.width)/2;
-        float y = Gdx.graphics.getHeight()/10;
-        ScreenUtils.clear(new Color(0,0,0.5f,0.9f));
+        float x = (Gdx.graphics.getWidth() + layout1.width) / 2;
+        float y = Gdx.graphics.getHeight() / 10;
+        ScreenUtils.clear(new Color(0, 0, 0.5f, 0.9f));
         batch.begin();
-        font1.draw(batch, layout1, Gdx.graphics.getWidth()/2-layout1.width/2,y*6);
-        font2.draw(batch, layout2, Gdx.graphics.getWidth()/2-layout2.width/2,y*5);
-        font3.draw(batch, layout3, Gdx.graphics.getWidth()/2-layout3.width/2,y*1.5f);
+        font1.draw(batch, layout1, Gdx.graphics.getWidth() / 2 - layout1.width / 2, y * 6);
+        font2.draw(batch, layout2, Gdx.graphics.getWidth() / 2 - layout2.width / 2, y * 5);
+        font3.draw(batch, layout3, Gdx.graphics.getWidth() / 2 - layout3.width / 2, y * 1.5f);
         batch.end();
     }
 
