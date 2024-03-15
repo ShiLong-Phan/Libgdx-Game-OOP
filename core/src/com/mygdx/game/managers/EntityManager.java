@@ -132,8 +132,7 @@ public class EntityManager implements entityBuilder {
                 Rectangle rect = rectObj.getRectangle();
                 Vector2 size = new Vector2((rect.x + rect.width / 2) / 2 / PPM,
                         (rect.y + rect.height / 2) / 2 / PPM);
-                System.out.println(size.x + "\t" + size.y);
-                createKinematicEntity(world, size, shape, Constants.BIT_WALL, Constants.BIT_PLAYER, userdata);
+                createKinematicEntity(world, size, rect.width, rect.height, shape, Constants.BIT_WALL, Constants.BIT_PLAYER, userdata);
             }
 
             shape.dispose();
@@ -178,7 +177,7 @@ public class EntityManager implements entityBuilder {
         dynamicEntities.add(dEntity);
     }
 
-    public void createKinematicEntity(final World world, Vector2 position, Shape shape, short cBits, short mBits, String userdata) {
+    public void createKinematicEntity(final World world, Vector2 position, float width, float height, Shape shape, short cBits, short mBits, String userdata) {
         Body body;
         BodyDef bdef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
@@ -192,7 +191,7 @@ public class EntityManager implements entityBuilder {
         body = world.createBody(bdef);
         body.createFixture(fixtureDef).setUserData(userdata);
 
-        kinematicEntity kEntity = new kinematicEntity(world, position, shape, cBits, mBits, body, userdata);
+        kinematicEntity kEntity = new kinematicEntity(world, position.x, position.y, width, height, cBits, mBits, body, userdata);
         kinematicEntities.add(kEntity);
     }
 
@@ -269,7 +268,7 @@ public class EntityManager implements entityBuilder {
         else
             bod.createFixture(fdef).setUserData(userdata);
 
-        kinematicEntity kbod = new kinematicEntity(world, x, y, width, height, cBits, mBits, bod);
+        kinematicEntity kbod = new kinematicEntity(world, x, y, width, height, cBits, mBits, bod, userdata);
 
         addKinematicEntity(kbod);
 
@@ -307,7 +306,7 @@ public class EntityManager implements entityBuilder {
         } else
             bod.createFixture(fdef).setUserData(userdata);
 
-        staticEntity sbod = new staticEntity(world, x, y, width, height, cBits, mBits, bod);
+        staticEntity sbod = new staticEntity(world, x, y, width, height, cBits, mBits, bod, userdata);
         addStaticEntity(sbod);
 
         System.out.println("Static Body Created");
@@ -345,7 +344,7 @@ public class EntityManager implements entityBuilder {
         else
             bod.createFixture(fdef).setUserData(userdata);
 
-        dynamicEntity dbod = new dynamicEntity(world, x, y, width, height, cBits, mBits, bod);
+        dynamicEntity dbod = new dynamicEntity(world, x, y, width, height, cBits, mBits, bod, userdata);
 
         addDynamicEntity(dbod);
 
@@ -381,7 +380,7 @@ public class EntityManager implements entityBuilder {
     }
 
     //upon landing in reset zone recreatePlayer at starting location
-    private void recreatePlayer(Entity player) {
+    private void recreatePlayer(Player player) {
         this.RemovalStack.push(player);
         this.player.remove(player);
         createPlayer(player.getWorld(), player.getX(), player.getY(), player.getWidth(), player.getHeight(),
