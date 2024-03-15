@@ -18,7 +18,7 @@ public class Player extends Entity{
 
         //resize img
         Pixmap pixmap;
-        Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("sprites/char.png"));
+        Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("sprites/apple.png"));
         pixmap = new Pixmap((int) width, (int) height,pixmapOriginal.getFormat());
         pixmap.drawPixmap(pixmapOriginal,0,0,pixmapOriginal.getWidth(),pixmapOriginal.getHeight(),0,0, pixmap.getWidth(), pixmap.getHeight());
         Texture tex;

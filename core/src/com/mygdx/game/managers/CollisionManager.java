@@ -1,5 +1,6 @@
 package com.mygdx.game.managers;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.mygdx.game.handlers.CollisionHandler;
 
 public class CollisionManager {
@@ -22,9 +23,14 @@ public class CollisionManager {
         return collisionHandler.getPuzzleCompletion();
     }
 
-    public boolean getLevelEnd(){
-        return collisionHandler.getLevelCompletion();
+    public boolean getOnGround(){
+        return collisionHandler.getOnGround();
     }
-    public boolean getOnGround(){return collisionHandler.getOnGround();}
-    public boolean getIfReset(){return collisionHandler.onReset();}
+    public boolean getIfReset(){return collisionHandler.getOnReset();}
+    public Body getOnCollection(){
+        if(collisionHandler.getOnCollect() != null) {
+            return collisionHandler.getOnCollect();
+        }
+        return null;
+    }
 }

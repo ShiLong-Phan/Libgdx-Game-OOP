@@ -21,8 +21,9 @@ public class IOManager {
     }
 
     public boolean moveUp(){
-        if (Gdx.input.isKeyJustPressed(Inputs.upArrowKey()))
+        if (Gdx.input.isKeyPressed(Inputs.upArrowKey())) {
             return true;
+        }
         return false;
     }
 

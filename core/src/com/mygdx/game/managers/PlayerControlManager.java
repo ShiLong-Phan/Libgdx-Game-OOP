@@ -1,6 +1,6 @@
 package com.mygdx.game.managers;
 
-import com.mygdx.game.entities.Entity;
+import com.mygdx.game.entities.Player;
 
 import java.util.ArrayList;
 
@@ -45,7 +45,7 @@ public class PlayerControlManager {
     }
     }*/
 
-    public void PlayerUpdate(ArrayList<Entity> players, float delta, boolean onGround) {
+    public void PlayerUpdate(ArrayList<Player> players, float delta, boolean onGround) {
         int horizontalForce = 0, verticalForce = 0;
 
         if (gsm.getIOManager().moveLeft()) { //move left

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="45" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="169">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="45" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="178">
  <tileset firstgid="1" source="assets/goodly.tsx"/>
  <tileset firstgid="257" source="assets/water.tsx"/>
  <layer id="1" name="Tile Layer 1" width="45" height="30">
   <data encoding="base64" compression="zlib">
-   eJzNmFFuwjAMhlPBJF4ZDxPwAt0J2E6AdpaOE2y7/lIRa78823HapvSXfgHFbT7cxHEJYV5dot8Guk1ekj4y39PvXZJyzN6YOWXxrB0xNbVSji85z9vo5+gdO448XfRn9A2OXcPjmM/hrwbsow/gY4r5iv6O/oHzDim+VOt8yD810Rv4jPWuFYz8L83d+zBtrduwz3Tv0XwekDDnFj8eG6utwCNxvCrnD9ljpDE9jHTPzgKPxPFeMEZO0pgkrEl0vylnp+Zu6/xa6nPCc4C1CPOpzbmazN4175ljczFPKfxdU85VTbw2LUVSjZSM8SX1Yyr1+WvS+Fadluozrf+a98DKI+ey1hIyt8Hes8Yqt+dp60Pri/j1anBfDFZrHWvMvL7VqgVDxiHm0v5M63nHyNsLD+2ZKT9TzhuNpUuvV4jrlFiPpL1+qJCZehv+DIC99C08XshMrLle+hjqq4H3WPt5Pr37SWnPv2IMvbS1mXtWydXqHPOTk1niwN6O+latd8WYMczIsWPjckbrOvgccDKYre+95j0ljlvyrOY5F2PG/Nf4CwLsQfc=
+   eJzNmFFuwjAMhlOhSbwyHhDwAuUEjBOgnaXjBNuuv1TE2i/LdtKkKfmlX9CSNF/dxHFxblldvT8y3Qe3pM/I73S/LSnGnNpmSbXMvFLOt8y88X733rLzyDN4f3k/4NzdvY757P5zwN77AD6GNt/eP96/0O8Q2i+hznsNx5jvesHIv+ue3rt5c92aHdOzR/N5QMKYW/x4rlQbgUfiuCj9c/YYacwURnpmZ4FH4rhNGCMmaUwS5iR63hSzU/e01b+WxpjwGGAuwnhqc25pZkkpc6w15hThfc05VzXx3NSKpBwpGdtPyR9zaYxfF8a38rSUn2n913wGVhw5l7WWkLl39p5Vqtiep60PrS7i16vBfTVYrXWsMfP8VisX5IyTW39qNW+JUllymSk+c84bjWUIn3doNyhtUyTt9blCZqpt+DsA1tIP93ohM7HGaumjq68OvmPu5/FM3U+m1vwrxjBKW5uxd5VYro4xvyUySxxY21HdqtWu2KaEGTm2bFzOaF0H3wNOBrP1e6p5TYnjTnlXS+mLbUr+a/wDMA1B5w==
   </data>
  </layer>
  <objectgroup id="3" name="Collision Layer">
@@ -215,17 +215,12 @@
   </object>
  </objectgroup>
  <objectgroup id="7" name="Collection Layer">
-  <object id="162" x="1280" y="384" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="166" x="1376" y="640" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="167" x="1344" y="96" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="168" x="384" y="224" width="32" height="32">
-   <ellipse/>
-  </object>
+  <object id="170" x="1261" y="107" width="38" height="38"/>
+  <object id="171" x="1357" y="363" width="38" height="38"/>
+  <object id="173" x="1388" y="621" width="38" height="38"/>
+  <object id="174" x="15" y="204" width="38" height="38"/>
+  <object id="175" x="333" y="204" width="38" height="38"/>
+  <object id="176" x="270" y="556" width="38" height="38"/>
+  <object id="177" x="620" y="716" width="38" height="38"/>
  </objectgroup>
 </map>

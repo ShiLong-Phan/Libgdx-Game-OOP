@@ -8,6 +8,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.mygdx.game.managers.GameSceneManager;
 
+import java.util.ArrayList;
+
+import static com.mygdx.game.utils.Constants.tokenImages;
+
 public class Application extends ApplicationAdapter {
 
     private Boolean DEBUG = false;
@@ -37,6 +41,11 @@ public class Application extends ApplicationAdapter {
         camera.setToOrtho(false, w / SCALE, h / SCALE);
         gsm = new GameSceneManager(this);
         System.out.println("Scene Manager Created");
+
+        tokenImages.add("sprites/apple.png");
+        tokenImages.add("sprites/banana.png");
+        tokenImages.add("sprites/carrot.png");
+        tokenImages.add("sprites/celery.png");
     }
 
     @Override
@@ -70,6 +79,7 @@ public class Application extends ApplicationAdapter {
     public OrthographicCamera getCamera() {
         return camera;
     }
+
 
 
 }

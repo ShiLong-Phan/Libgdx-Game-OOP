@@ -115,8 +115,14 @@ public abstract class Entity {
 
     public void render(SpriteBatch batch){
         if(tex != null) {
-            batch.draw(tex, body.getPosition().x * PPM - tex.getWidth() / 2,
-                    body.getPosition().y * PPM - tex.getHeight() / 2);
+            if(this instanceof kinematicEntity) {
+                batch.draw(tex, x * PPM - tex.getWidth() / 2 - 1,
+                        y * PPM - tex.getHeight() / 2);
+            }
+            else{
+                batch.draw(tex, body.getPosition().x * PPM - tex.getWidth() / 2,
+                        body.getPosition().y * PPM - tex.getHeight() / 2);
+            }
         }
     }
 }

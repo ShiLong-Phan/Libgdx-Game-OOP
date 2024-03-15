@@ -6,6 +6,8 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.interfaces.entityBuilder;
@@ -20,7 +22,7 @@ import static com.mygdx.game.utils.TiledObjectRender.createPolygon;
 import static com.mygdx.game.utils.TiledObjectRender.createRectangle;
 
 public class EntityManager implements entityBuilder {
-    private static ArrayList<Entity> player = new ArrayList<>();
+    private static ArrayList<Player> player = new ArrayList<>();
     private static ArrayList<Entity> staticEntities = new ArrayList<>();
     private static ArrayList<Entity> kinematicEntities = new ArrayList<>();
     private static ArrayList<Entity> dynamicEntities = new ArrayList<>();
@@ -48,7 +50,7 @@ public class EntityManager implements entityBuilder {
         return dynamicEntities;
     }
 
-    public ArrayList<Entity> getPlayer() {
+    public ArrayList<Player> getPlayer() {
         return player;
     }
 
@@ -95,6 +97,7 @@ public class EntityManager implements entityBuilder {
     }
 
     public void parseTileLayerEntities(final World world, MapObjects objects, int layer) {
+        int token = 1;
         for (MapObject object : objects) {
             Shape shape;
 
@@ -125,8 +128,12 @@ public class EntityManager implements entityBuilder {
 
             } else if (layer == 3) {
                 userdata = "token";
-                createKinematicEntity(world, shape, Constants.BIT_WALL, Constants.BIT_PLAYER, userdata);
-
+                RectangleMapObject rectObj = (RectangleMapObject) object;
+                Rectangle rect = rectObj.getRectangle();
+                Vector2 size = new Vector2((rect.x + rect.width / 2) / 2 / PPM,
+                        (rect.y + rect.height / 2) / 2 / PPM);
+                System.out.println(size.x + "\t" + size.y);
+                createKinematicEntity(world, size, shape, Constants.BIT_WALL, Constants.BIT_PLAYER, userdata);
             }
 
             shape.dispose();
@@ -171,7 +178,7 @@ public class EntityManager implements entityBuilder {
         dynamicEntities.add(dEntity);
     }
 
-    public void createKinematicEntity(final World world, Shape shape, short cBits, short mBits, String userdata) {
+    public void createKinematicEntity(final World world, Vector2 position, Shape shape, short cBits, short mBits, String userdata) {
         Body body;
         BodyDef bdef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
@@ -185,7 +192,7 @@ public class EntityManager implements entityBuilder {
         body = world.createBody(bdef);
         body.createFixture(fixtureDef).setUserData(userdata);
 
-        kinematicEntity kEntity = new kinematicEntity(world, shape, cBits, mBits, body, userdata);
+        kinematicEntity kEntity = new kinematicEntity(world, position, shape, cBits, mBits, body, userdata);
         kinematicEntities.add(kEntity);
     }
 
@@ -396,14 +403,32 @@ public class EntityManager implements entityBuilder {
                 }
             }
         }
-        for (Entity e: player){
+
+        if(collisionManager.getOnCollection() != null) {
+            for (int i = 0; i < kinematicEntities.size(); i++) {
+                if (kinematicEntities.get(i).getBody() == collisionManager.getOnCollection()) {
+                    removeBody(kinematicEntities.get(i));
+                    break;
+                }
+            }
+        }
+        for (Entity e: kinematicEntities){
+            if(e.getTex() != null) {
+                e.render(batch);
+            }
+        }
+        for (Player e: player){
             if(e != null)
                 e.render(batch);
         }
 
+
         aiManager.moveBody(kinematicEntities);
         if (collisionManager.checkCollision())
             aiManager.showEndPoint(kinematicEntities, 4.5f);
+        while (!RemovalStack.empty()) {
+            player.get(0).getWorld().destroyBody(RemovalStack.pop().getBody());
+        }
     }
 
 

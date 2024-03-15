@@ -14,7 +14,6 @@ public class dynamicEntity extends Entity{
     public dynamicEntity(final World world, Shape shape, short cBits, short mBits, Body body, String userdata) {
         super(world, shape, 1, true,cBits,mBits, body,userdata);
     }
-    public void render(SpriteBatch batch){}
 
 
 

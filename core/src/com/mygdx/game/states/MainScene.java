@@ -28,8 +28,6 @@ public class MainScene extends GameScene {
     private World world;
     private CollisionHandler collisionHandler;
     private Player player;
-    private EntityManager eManager;
-    private IOManager ioManager;
     private float accumulator = 0;
     private boolean restart = false;
 
@@ -46,8 +44,6 @@ public class MainScene extends GameScene {
         //music
         super.playGameMusic();
 
-        this.eManager = gsm.geteManager();
-        this.ioManager = gsm.getIOManager();
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
         collisionHandler = new CollisionHandler();
         world.setContactListener(collisionHandler);
@@ -61,20 +57,14 @@ public class MainScene extends GameScene {
         );
 
 
-        player = eManager.createPlayer(world, 25, 100, 20, 20, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL | Constants.BIT_BLOCK | Constants.BIT_END));
-        eManager.addPlayer(player);
-
-
-        //movingPlatform = platformBuilder.createKinematicBody(world, 415, 150, 255, 150, true, Constants.BIT_WALL, (short) (Constants.BIT_PLAYER | Constants.BIT_BLOCK), null);
-        //dynamicBox = eManager.createDynamicEntity(world, 268.5f, 200, 30, 30, true, Constants.BIT_BLOCK, (short) (Constants.BIT_PLAYER | Constants.BIT_WALL | Constants.BIT_WALL), "block");
-        //sendPlatform = eManager.createKinematicEntity(world, 525f, 50, 30, 30, true, Constants.BIT_END, Constants.BIT_PLAYER, "end");
-        //border to box the game
+        player = gsm.geteManager().createPlayer(world, 25, 100, 20, 20, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL | Constants.BIT_BLOCK | Constants.BIT_END));
+        gsm.geteManager().addPlayer(player);
 
         map = new TmxMapLoader().load("maps/map1.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 1/ Application.SCALE);
         tmr.setView(camera);
         //for(int i = 0; i < map.getLayers().size(); i++) {
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < map.getLayers().size()-1; i++) {
             gsm.geteManager().parseTileLayerEntities(world, map.getLayers().get(i+1).getObjects(), i);
         }
 
@@ -91,7 +81,7 @@ public class MainScene extends GameScene {
 
     @Override
     public void update(float delta) {
-        world.step(1 / 60f, 6, 2); //just use 6 and 2
+        world.step(1 / 75f, 6, 2); //just use 6 and 2
         //player.inputUpdate();
 
         cameraUpdate();
@@ -101,25 +91,21 @@ public class MainScene extends GameScene {
         batch.draw(backgroundTexture,0,0);
 
         //update all entities
-        eManager.update(delta, batch);
+        gsm.geteManager().update(delta, batch);
         accumulator += delta;
         //if r key is pressed restart scene
-        if (!collisionHandler.getLevelCompletion() && Gdx.input.isKeyJustPressed(Input.Keys.R) && accumulator > 0.5) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R) && accumulator > 0.5) {
             musicPlayer.stop();
             gsm.setState(GameSceneManager.State.MAIN);
         }
         //if stage completed go to next scene
-        if (collisionHandler.getLevelCompletion() && Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-            musicPlayer.stop();
-            gsm.setState(GameSceneManager.State.END);
-        }
+
         batch.end();
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(new Color(0, 0, 0f, 1f));
-
 
         update(Gdx.graphics.getDeltaTime());
         tmr.render();
@@ -133,7 +119,7 @@ public class MainScene extends GameScene {
         System.out.println("Scene Disposed");
         world.dispose();
         b2dr.dispose();
-        eManager.dispose();
+        gsm.geteManager().dispose();
         tmr.dispose();
         map.dispose();
     }
