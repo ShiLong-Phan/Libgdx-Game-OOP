@@ -8,9 +8,8 @@ import com.badlogic.gdx.physics.box2d.World;
 
 
 public class Player extends Entity{
-    private int Currency;
+    private int tokens;
 
-    private Body body;
 
 
     public Player(final World world, float x, float y, float width, float height, short cBits, short mBits, Body body) {
@@ -29,6 +28,11 @@ public class Player extends Entity{
     }
 
 
+    public int getTokens() {
+        return tokens;
+    }
 
-
+    public void setTokens(int tokens) {
+        this.tokens = tokens;
+    }
 }

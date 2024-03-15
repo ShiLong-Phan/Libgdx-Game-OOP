@@ -25,8 +25,8 @@ public class kinematicEntity extends Entity{
         int random = (int) (Math.random() * tokenImages.size());
 
         Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal(tokenImages.get(random)));
-        pixmap = new Pixmap((int) width, (int) height,pixmapOriginal.getFormat());
-        pixmap.drawPixmap(pixmapOriginal,-20,0,pixmapOriginal.getWidth(),pixmapOriginal.getHeight(),0,0, pixmap.getWidth(), pixmap.getHeight());
+        pixmap = new Pixmap((int) width/2, (int) height/2,pixmapOriginal.getFormat());
+        pixmap.drawPixmap(pixmapOriginal,0,0,pixmapOriginal.getWidth(),pixmapOriginal.getHeight(),0,0, pixmap.getWidth(), pixmap.getHeight());
         Texture tex;
         tex = new Texture(pixmap);
         super.setTex(tex);

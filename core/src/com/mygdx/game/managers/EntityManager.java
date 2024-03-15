@@ -97,7 +97,7 @@ public class EntityManager implements entityBuilder {
     }
 
     public void parseTileLayerEntities(final World world, MapObjects objects, int layer) {
-        int token = 1;
+        int token = 0;
         for (MapObject object : objects) {
             Shape shape;
 
@@ -128,6 +128,8 @@ public class EntityManager implements entityBuilder {
 
             } else if (layer == 3) {
                 userdata = "token";
+                token++;
+
                 RectangleMapObject rectObj = (RectangleMapObject) object;
                 Rectangle rect = rectObj.getRectangle();
                 Vector2 size = new Vector2((rect.x + rect.width / 2) / 2 / PPM,
@@ -136,7 +138,10 @@ public class EntityManager implements entityBuilder {
             }
 
             shape.dispose();
-
+            for(int i =0; i < player.size(); i++){
+                if (player.get(i) != null)
+                    player.get(i).setTokens(token);
+            }
         }
     }
 
@@ -195,165 +200,6 @@ public class EntityManager implements entityBuilder {
         kinematicEntities.add(kEntity);
     }
 
-
-    //creating custom entities
-    public Body createBody(final World world, float x, float y, float width, float height,
-                           int isStatic, boolean fixedRotation, short cBits, short mBits, String userdata) {
-
-        //define physical quality friction,initial position, moves or no etc
-        BodyDef def = new BodyDef();
-        def.position.set(x / PPM, y / PPM); //set position
-
-        if (isStatic == 0)
-            def.type = BodyDef.BodyType.StaticBody;
-        else if (isStatic == 1)
-            def.type = BodyDef.BodyType.DynamicBody;
-        else
-            def.type = BodyDef.BodyType.KinematicBody;
-
-        def.fixedRotation = fixedRotation; //if false will rotate after being interacted
-
-        //give shape box2d works from middle thus /2
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2 / PPM, height / 2 / PPM); //if getting box2d units divide if giving thn multiply
-
-        //no friction so cant climb walls
-        FixtureDef fdef = new FixtureDef();
-        if (isStatic == 1) {
-            fdef.restitution = .2F;
-            fdef.friction = 0.2f;
-        } else fdef.friction = 0.0f;
-        fdef.shape = shape;
-        fdef.density = 1.0f;
-        fdef.filter.categoryBits = cBits; //is a
-        fdef.filter.maskBits = mBits; // collides with
-
-        Body bod = world.createBody(def);
-        if (userdata == null)
-            bod.createFixture(fdef).setUserData(this);
-        else
-            bod.createFixture(fdef).setUserData(userdata);
-
-        return bod;
-    }
-
-
-    public Body createKinematicEntity(final World world, float x, float y, float width, float height
-            , boolean fixedRotation, short cBits, short mBits, String userdata) {
-
-        //define physical quality friction,initial position, moves or no etc
-        BodyDef def = new BodyDef();
-        def.position.set(x / PPM, y / PPM); //set position
-
-
-        def.type = BodyDef.BodyType.KinematicBody;
-
-        def.fixedRotation = fixedRotation; //if false will rotate after being interacted
-
-        //give shape box2d works from middle thus /2
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2 / PPM, height / 2 / PPM); //if getting box2d units divide if giving thn multiply
-
-        //no friction so cant climb walls
-        FixtureDef fdef = new FixtureDef();
-        fdef.shape = shape;
-        fdef.density = 1.0f;
-        fdef.friction = 1.0f;
-        fdef.filter.categoryBits = cBits; //is a
-        fdef.filter.maskBits = mBits; // collides with
-
-        Body bod = world.createBody(def);
-        if (userdata == null)
-            bod.createFixture(fdef).setUserData(this);
-        else
-            bod.createFixture(fdef).setUserData(userdata);
-
-        kinematicEntity kbod = new kinematicEntity(world, x, y, width, height, cBits, mBits, bod, userdata);
-
-        addKinematicEntity(kbod);
-
-        System.out.println("Kinematic Body Created");
-
-        return bod;
-    }
-
-    public Body createStaticEntity(final World world, float x, float y, float width, float height,
-                                   boolean fixedRotation, short cBits, short mBits, String userdata) {
-
-        //define physical quality friction,initial position, moves or no etc
-        BodyDef def = new BodyDef();
-        def.position.set(x / PPM, y / PPM); //set position
-
-        def.type = BodyDef.BodyType.StaticBody;
-
-        def.fixedRotation = fixedRotation; //if false will rotate after being interacted
-
-        //give shape box2d works from middle thus /2
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2 / PPM, height / 2 / PPM); //if getting box2d units divide if giving thn multiply
-
-        //no friction so cant climb walls
-        FixtureDef fdef = new FixtureDef();
-        fdef.shape = shape;
-        fdef.density = 1.0f;
-        fdef.friction = 0.25f;
-        fdef.filter.categoryBits = cBits; //is a
-        fdef.filter.maskBits = mBits; // collides with
-
-        Body bod = world.createBody(def);
-        if (userdata == null) {
-            bod.createFixture(fdef).setUserData(this);
-        } else
-            bod.createFixture(fdef).setUserData(userdata);
-
-        staticEntity sbod = new staticEntity(world, x, y, width, height, cBits, mBits, bod, userdata);
-        addStaticEntity(sbod);
-
-        System.out.println("Static Body Created");
-
-        return bod;
-    }
-
-    public Body createDynamicEntity(final World world, float x, float y, float width, float height,
-                                    boolean fixedRotation, short cBits, short mBits, String userdata) {
-
-        //define physical quality friction,initial position, moves or no etc
-        BodyDef def = new BodyDef();
-        def.position.set(x / PPM, y / PPM); //set position
-
-        def.type = BodyDef.BodyType.DynamicBody;
-
-        def.fixedRotation = fixedRotation; //if false will rotate after being interacted
-
-        //give shape box2d works from middle thus /2
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2 / PPM, height / 2 / PPM); //if getting box2d units divide if giving thn multiply
-
-        //no friction so cant climb walls
-        FixtureDef fdef = new FixtureDef();
-        fdef.shape = shape;
-        fdef.density = 1.0f;
-        fdef.friction = 10f;
-        fdef.restitution = 0.15f;
-        fdef.filter.categoryBits = cBits; //is a
-        fdef.filter.maskBits = mBits; // collides with
-
-        Body bod = world.createBody(def);
-        if (userdata == null)
-            bod.createFixture(fdef).setUserData(this);
-        else
-            bod.createFixture(fdef).setUserData(userdata);
-
-        dynamicEntity dbod = new dynamicEntity(world, x, y, width, height, cBits, mBits, bod, userdata);
-
-        addDynamicEntity(dbod);
-
-        System.out.println("Dynamic Body Created");
-
-        return bod;
-    }
-
-
     //player creation
     public Player createPlayer(final World world, float x, float y, float width, float height, short cBits, short mBits) {
         BodyDef def = new BodyDef();
@@ -380,7 +226,7 @@ public class EntityManager implements entityBuilder {
     }
 
     //upon landing in reset zone recreatePlayer at starting location
-    private void recreatePlayer(Player player) {
+    private void recreatePlayer(Entity player) {
         this.RemovalStack.push(player);
         this.player.remove(player);
         createPlayer(player.getWorld(), player.getX(), player.getY(), player.getWidth(), player.getHeight(),
@@ -407,6 +253,14 @@ public class EntityManager implements entityBuilder {
             for (int i = 0; i < kinematicEntities.size(); i++) {
                 if (kinematicEntities.get(i).getBody() == collisionManager.getOnCollection()) {
                     removeBody(kinematicEntities.get(i));
+                    //reduce tokens to be collected by 1
+                    for(int j = 0; j < player.size(); j++){
+                        if (player.get(j) != null){
+                            if(player.get(j).getTokens() != 0)
+                                player.get(j).setTokens(player.get(j).getTokens()-1);
+                            break;
+                        }
+                    }
                     break;
                 }
             }
@@ -421,12 +275,14 @@ public class EntityManager implements entityBuilder {
                 e.render(batch);
         }
 
-
         aiManager.moveBody(kinematicEntities);
         if (collisionManager.checkCollision())
             aiManager.showEndPoint(kinematicEntities, 4.5f);
         while (!RemovalStack.empty()) {
-            player.get(0).getWorld().destroyBody(RemovalStack.pop().getBody());
+            try {
+                player.get(0).getWorld().destroyBody(RemovalStack.pop().getBody());
+            }catch (Exception e){
+            }
         }
     }
 

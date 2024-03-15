@@ -1,7 +1,5 @@
 package com.mygdx.game.managers;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Application;
 import com.mygdx.game.states.*;
@@ -20,7 +18,7 @@ public class GameSceneManager {
     private Texture backgroundTexture;
 
 
-    public enum State {
+    public enum Scene {
         START,
         MAIN,
         END
@@ -32,7 +30,7 @@ public class GameSceneManager {
         this.ioManager = new IOManager();
         this.eManager = new EntityManager(this);
         this.states = new Stack<GameScene>();
-        this.setState(State.START);
+        this.setState(Scene.START);
     }
 
     public Application getApp() {
@@ -58,16 +56,16 @@ public class GameSceneManager {
         states.peek().resize(w, h);
     }
 
-    public void setState(State state) {
+    public void setState(Scene scene) {
         if (states.size() >= 1) {
             states.pop().dispose();
         }
-        states.push(getState(state));
+        states.push(getState(scene));
     }
 
 
-    private GameScene getState(State state) {
-        switch (state) {
+    private GameScene getState(Scene scene) {
+        switch (scene) {
             case START:
                 return new StartScene(this);
             case MAIN:
@@ -83,7 +81,7 @@ public class GameSceneManager {
         return playerControlManager;
     }
 
-    public EntityManager geteManager(){
+    public EntityManager getEntityManager(){
         return eManager;
     }
 
