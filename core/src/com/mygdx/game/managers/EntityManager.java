@@ -226,11 +226,16 @@ public class EntityManager implements entityBuilder {
     }
 
     //upon landing in reset zone recreatePlayer at starting location
-    private void recreatePlayer(Entity player) {
+    private void recreatePlayer(Player player) {
         this.RemovalStack.push(player);
         this.player.remove(player);
         createPlayer(player.getWorld(), player.getX(), player.getY(), player.getWidth(), player.getHeight(),
                 player.getcBits(), player.getmBits()).getBody();
+        for(int i = 0; i < this.player.size(); i++){
+            if(this.player.get(i) != null){
+                this.player.get(i).setTokens(player.getTokens());
+            }
+        }
     }
 
     public void update(float delta, SpriteBatch batch) {

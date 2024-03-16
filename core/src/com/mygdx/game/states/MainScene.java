@@ -53,8 +53,10 @@ public class MainScene extends GameScene {
         );
 
 
-        player = gsm.getEntityManager().createPlayer(world, 25, 100, 20, 20, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL | Constants.BIT_BLOCK | Constants.BIT_END));
+        player = gsm.getEntityManager().createPlayer(world, 25, 100, 20, 23, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL | Constants.BIT_BLOCK | Constants.BIT_END));
         gsm.getEntityManager().addPlayer(player);
+
+        //sgsm.getEntityManager().createKinematicEntity(world, new Vector2(100,100),64,32,);
 
         map = new TmxMapLoader().load("maps/map1.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 1 / Application.SCALE);

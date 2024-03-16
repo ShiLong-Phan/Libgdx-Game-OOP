@@ -4,7 +4,7 @@
  <tileset firstgid="257" source="assets/water.tsx"/>
  <layer id="1" name="Tile Layer 1" width="45" height="30">
   <data encoding="base64" compression="zlib">
-   eJzNmFFuwjAMhlOhSbwyHhDwAuUEjBOgnaXjBNuuv1TE2i/LdtKkKfmlX9CSNF/dxHFxblldvT8y3Qe3pM/I73S/LSnGnNpmSbXMvFLOt8y88X733rLzyDN4f3k/4NzdvY757P5zwN77AD6GNt/eP96/0O8Q2i+hznsNx5jvesHIv+ue3rt5c92aHdOzR/N5QMKYW/x4rlQbgUfiuCj9c/YYacwURnpmZ4FH4rhNGCMmaUwS5iR63hSzU/e01b+WxpjwGGAuwnhqc25pZkkpc6w15hThfc05VzXx3NSKpBwpGdtPyR9zaYxfF8a38rSUn2n913wGVhw5l7WWkLl39p5Vqtiep60PrS7i16vBfTVYrXWsMfP8VisX5IyTW39qNW+JUllymSk+c84bjWUIn3doNyhtUyTt9blCZqpt+DsA1tIP93ohM7HGaumjq68OvmPu5/FM3U+m1vwrxjBKW5uxd5VYro4xvyUySxxY21HdqtWu2KaEGTm2bFzOaF0H3wNOBrP1e6p5TYnjTnlXS+mLbUr+a/wDMA1B5w==
+   eJzNmFFuwyAMhkHVpL52fZjavqzZCbqdoNpZsp5g2/VH1Fj7ZdngAKH80q8qlMBXE4xT59rqEvye6WF2T/pMfE+/tyelmK19Wqpn5o3S3jPzLvg5eM/akWcM/gq+QdvVPY757P5zwCH4CD7Nfb6Df4J/4b7j3L+FfPAWrjHfDYKR/8XffXB1c92WXdPao/lzQMKYx/ixrVQ7gUfieFPuzzljpDktjLRmZ4FH4vhYMEdK0pwkzEm03hSzV3937P61NMWExwBzEcZTe+ZaM0uyPGO9MVuEv6vms6qJ56ZeJOVIydh/Sf6opSl+fp4/lqel/Ez7f801iMWRc8X2EjIPLn5mlSp15mn7Q6uL+HhrcF8irLF9rDHz/CaNodWQS2SZh6uk/qT5aq2DlaVGzSydnTnSWMb58wr9RqVvayEz1Tb8HQBr6Zt7vJCZWFO19MnVk5bXvdLO42k9T5bW/BuBwXLeSvs1latTzE9GZonPMsd0vlJNa6ltU0aOPRubM+bOge8I+K6QOx6vKXHckv8D+bnBmUvG/gNTi0IV
   </data>
  </layer>
  <objectgroup id="3" name="Collision Layer">
@@ -17,11 +17,8 @@
   <object id="92" x="352" y="864">
    <polyline points="0,0 160,0"/>
   </object>
-  <object id="93" x="512" y="832">
-   <polyline points="0,0 96,0"/>
-  </object>
-  <object id="95" x="819.2" y="832">
-   <polyline points="-115.2,0 76.8,0"/>
+  <object id="95" x="699.2" y="832">
+   <polyline points="-187.2,0 124.8,0"/>
   </object>
   <object id="96" x="960" y="800">
    <polyline points="0,0 128,0"/>
@@ -44,10 +41,10 @@
   <object id="102" x="1088" y="544">
    <polyline points="0,0 -224,0"/>
   </object>
-  <object id="103" x="448" y="704">
+  <object id="103" x="480" y="672">
    <polyline points="0,0 -32,0"/>
   </object>
-  <object id="104" x="416" y="672">
+  <object id="104" x="448" y="640">
    <polyline points="0,0 -96,0"/>
   </object>
   <object id="105" x="224" y="608">
@@ -97,11 +94,8 @@
   <object id="152" x="128" y="920">
    <polyline points="0,0 96,0"/>
   </object>
-  <object id="153" x="608" y="888">
-   <polyline points="0,0 96,0"/>
-  </object>
-  <object id="154" x="896" y="888">
-   <polyline points="0,0 64,0"/>
+  <object id="154" x="832" y="888">
+   <polyline points="0,0 128,0"/>
   </object>
   <object id="155" x="256" y="400">
    <polyline points="0,0 64,0"/>
@@ -126,13 +120,7 @@
   <object id="122" x="512" y="832">
    <polyline points="0,0 0,32"/>
   </object>
-  <object id="123" x="608" y="832">
-   <polyline points="0,0 0,128"/>
-  </object>
-  <object id="125" x="736" y="832">
-   <polyline points="-32,0 -32,128"/>
-  </object>
-  <object id="127" x="896" y="832">
+  <object id="127" x="832" y="832">
    <polyline points="0,0 0,128"/>
   </object>
   <object id="128" x="960" y="960">
@@ -198,10 +186,10 @@
   <object id="148" x="128" y="576">
    <polyline points="0,0 0,-64"/>
   </object>
-  <object id="149" x="320" y="672">
+  <object id="149" x="352" y="640">
    <polyline points="0,0 0,64 64,64 64,96 128,96 128,32"/>
   </object>
-  <object id="150" x="416" y="704">
+  <object id="150" x="448" y="672">
    <polyline points="0,0 0,-32"/>
   </object>
   <object id="151" x="0" y="0">
@@ -216,11 +204,11 @@
  </objectgroup>
  <objectgroup id="7" name="Collection Layer">
   <object id="170" x="1261" y="107" width="38" height="38"/>
-  <object id="171" x="1357" y="363" width="38" height="38"/>
+  <object id="171" x="1296" y="360" width="38" height="38"/>
   <object id="173" x="1388" y="621" width="38" height="38"/>
   <object id="174" x="15" y="204" width="38" height="38"/>
   <object id="175" x="333" y="204" width="38" height="38"/>
-  <object id="176" x="270" y="556" width="38" height="38"/>
-  <object id="177" x="620" y="716" width="38" height="38"/>
+  <object id="176" x="272" y="520" width="38" height="38"/>
+  <object id="177" x="680" y="656" width="38" height="38"/>
  </objectgroup>
 </map>
