@@ -2,15 +2,17 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import com.mygdx.game.managers.GameSceneManager;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.mygdx.game.GameEngine.managers.GameSceneManager;
+import com.mygdx.game.GameEngine.utils.Constants;
 
-import java.util.ArrayList;
-
-import static com.mygdx.game.utils.Constants.tokenImages;
+import static com.mygdx.game.GameEngine.utils.Constants.tmr;
+import static com.mygdx.game.GameEngine.utils.Constants.tokenImages;
 
 public class Application extends ApplicationAdapter {
 
@@ -46,6 +48,19 @@ public class Application extends ApplicationAdapter {
         tokenImages.add("sprites/banana.png");
         tokenImages.add("sprites/carrot.png");
         tokenImages.add("sprites/celery.png");
+
+        tmr = new OrthogonalTiledMapRenderer[3];
+
+        //lvl2
+        TiledMap map2 = new TmxMapLoader().load("maps/map2.tmx");
+        tmr[1] = new OrthogonalTiledMapRenderer(map2, .5f);
+        tmr[1].setView(camera);
+
+
+        //lvl3
+        TiledMap map3 = new TmxMapLoader().load("maps/map1.tmx");
+        tmr[2] = new OrthogonalTiledMapRenderer(map3, .5f);
+        tmr[2].setView(camera);
     }
 
     @Override
@@ -65,6 +80,8 @@ public class Application extends ApplicationAdapter {
         System.out.println("Lifecycle Ended");
         gsm.dispose();
         batch.dispose();
+        Constants.tmr[1].dispose();
+        Constants.tmr[2].dispose();
 
     }
 
