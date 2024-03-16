@@ -80,8 +80,8 @@ public class Application extends ApplicationAdapter {
         System.out.println("Lifecycle Ended");
         gsm.dispose();
         batch.dispose();
-        Constants.tmr[1].dispose();
-        Constants.tmr[2].dispose();
+        tmr[1].dispose();
+        tmr[2].dispose();
 
     }
 
