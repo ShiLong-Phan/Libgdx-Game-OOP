@@ -7,14 +7,11 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Application;
-import com.mygdx.game.GameEngine.entities.Entity;
-import com.mygdx.game.GameEngine.handlers.CollisionHandler;
 import com.mygdx.game.GameEngine.managers.GameSceneManager;
 import com.mygdx.game.GameEngine.scene.GameScene;
 import com.mygdx.game.GameEngine.utils.Constants;
@@ -24,7 +21,6 @@ public class level2 extends GameScene {
 
     private Box2DDebugRenderer b2dr;
     private World world;
-    private CollisionHandler collisionHandler;
     private Player player;
     private float accumulator = 0, accumulator2 = 0;
 
@@ -40,8 +36,7 @@ public class level2 extends GameScene {
         super.playGameMusic();
 
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
-        collisionHandler = gsm.getEntityManager().getCollisionManager().getCollisionHandler();
-        world.setContactListener(collisionHandler);
+        world.setContactListener(gsm.getEntityManager().getCollisionManager().getCollisionHandler());
         b2dr = new Box2DDebugRenderer(
                 /*drawBodies*/true,
                 /*drawJoints*/false,

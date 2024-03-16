@@ -39,8 +39,8 @@ public class level3 extends GameScene {
         super.playGameMusic();
 
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
-        collisionHandler = gsm.getEntityManager().getCollisionManager().getCollisionHandler();
-        world.setContactListener(collisionHandler);
+
+        world.setContactListener(collisionHandler = gsm.getEntityManager().getCollisionManager().getCollisionHandler());
         b2dr = new Box2DDebugRenderer(
                 /*drawBodies*/true,
                 /*drawJoints*/false,

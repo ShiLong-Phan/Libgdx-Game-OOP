@@ -9,17 +9,15 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.GameEngine.managers.GameSceneManager;
-import com.mygdx.game.GameEngine.utils.Constants;
 
 import static com.mygdx.game.GameEngine.utils.Constants.tmr;
 import static com.mygdx.game.GameEngine.utils.Constants.tokenImages;
 
 public class Application extends ApplicationAdapter {
 
-    private Boolean DEBUG = false;
 
     //application titles and measurements
-    public static final String TITLE = "GAMETEST";
+    public static final String TITLE = "NutriQuest";
     public static final int V_WIDTH = 1440, V_HEIGHT = 960;
     public static final float SCALE = 2.0f;
 
