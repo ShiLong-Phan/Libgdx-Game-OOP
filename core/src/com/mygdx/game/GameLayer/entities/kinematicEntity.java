@@ -48,10 +48,8 @@ public class kinematicEntity extends Entity {
             pixmap.dispose();
             pixmapOriginal.dispose();
         } else if (userdata == "reset") {
-            super.setX(x/PPM);
-            super.setY(y/PPM);
             pixmapOriginal = new Pixmap(Gdx.files.internal("sprites/burger.png"));
-            pixmap = new Pixmap((int) width, (int) height, pixmapOriginal.getFormat());
+            pixmap = new Pixmap((int) width / 2, (int) height / 2, pixmapOriginal.getFormat());
             pixmap.drawPixmap(pixmapOriginal, 0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(), 0, 0, pixmap.getWidth(), pixmap.getHeight());
             Texture tex;
             tex = new Texture(pixmap);
@@ -73,13 +71,18 @@ public class kinematicEntity extends Entity {
         if (super.getTex() != null) {
             if (this instanceof kinematicEntity) {
                 if (super.getEntityData() == "ground") {
-                    batch.draw(super.getTex(), super.getBody().getPosition().x * PPM - super.getTex().getWidth() / 2 - 1,
-                            super.getBody().getPosition().y * PPM - super.getTex().getHeight() / 2);
+                    batch.draw(tex, body.getPosition().x * PPM - tex.getWidth() / 2 - 1,
+                            body.getPosition().y * PPM - tex.getHeight() / 2);
                 } else if (super.getEntityData() == "token") {
-                    super.setX(super.getX() + super.getBody().getLinearVelocity().x /PPM / 2);
-                    super.setY(super.getY() + super.getBody().getLinearVelocity().y /PPM / 2);
-                    batch.draw(super.getTex(), super.getX() * PPM - super.getTex().getWidth() / 2 - 1,
-                            super.getY() * PPM - super.getTex().getHeight() / 2);
+                    super.setX(x + body.getLinearVelocity().x /PPM / 2);
+                    super.setY(y + body.getLinearVelocity().y /PPM / 2);
+                    batch.draw(tex, x * PPM - tex.getWidth() / 2 - 1,
+                            y * PPM - tex.getHeight() / 2);
+                } else if (super.getEntityData() == "reset") {
+                    super.setX(x + body.getLinearVelocity().x / PPM / 2);
+                    super.setY(y + body.getLinearVelocity().y / PPM / 2);
+                    batch.draw(tex, x * PPM - tex.getWidth() / 2 - 1,
+                            y * PPM - tex.getHeight() / 2);
                 }
             }
         }

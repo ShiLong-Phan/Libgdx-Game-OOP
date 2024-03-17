@@ -33,11 +33,22 @@ public class level1 extends GameScene {
     //colelctible
     private int collectable = 0;
 
+    private Box2DDebugRenderer b2dr;
+
     public level1(GameSceneManager gsm) {
         super(gsm);
 
         //music
         super.playGameMusic();
+
+        b2dr = new Box2DDebugRenderer(
+                /*drawBodies*/true,
+                /*drawJoints*/false,
+                /*drawAABBs*/false,
+                /*drawInactiveBodies*/false,
+                /*drawVelocities*/false,
+                /*drawContacts*/false
+        );
 
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
 
@@ -57,6 +68,7 @@ public class level1 extends GameScene {
 
         map = new TmxMapLoader().load("maps/map1.tmx");
         for (int i = 0; i < map.getLayers().size() - 1; i++) {
+            //skip layer 0 as it is just a tile layer with no objs
             gsm.getEntityManager().parseTileLayerEntities(world, map.getLayers().get(i + 1).getObjects(), i);
         }
 
@@ -103,6 +115,7 @@ public class level1 extends GameScene {
 
         //render sprites >> map >> box2d
         update(Gdx.graphics.getDeltaTime());
+        b2dr.render(world, camera.combined.scl(Constants.PPM));
 
 
         //render first tiled map

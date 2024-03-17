@@ -11,15 +11,15 @@ import static com.mygdx.game.GameEngine.utils.Constants.PPM;
 
 public abstract class Entity {
 
-    private final World world;
-    private float x, y, width, height;
-    private short cBits, mBits;
-    private int isStatic;
-    private boolean fixedRotation;
-    private Body body;
-    private Shape shape;
-    private String entityData;
-    private Texture tex;
+    protected final World world;
+    protected float x, y, width, height;
+    protected short cBits, mBits;
+    protected int isStatic;
+    protected boolean fixedRotation;
+    protected Body body;
+    protected Shape shape;
+    protected String entityData;
+    protected Texture tex;
 
     public Entity(final World world, float x, float y, float width, float height, int isStatic, boolean fixedRotation, short cBits, short mBits, Body body, String userdata) {
         this.world = world;

@@ -123,14 +123,23 @@ public class EntityManager implements entityBuilder {
                 Vector2 size = new Vector2((rect.x + rect.width / 2) / 2 / Constants.PPM,
                         (rect.y + rect.height / 2) / 2 / Constants.PPM);
                 createKinematicEntity(world, size, rect.width, rect.height, shape, Constants.BIT_WALL, Constants.BIT_PLAYER, userdata);
+            } else if (layer == 4) {
+                userdata = "reset";
+                RectangleMapObject rectObj = (RectangleMapObject) object;
+                Rectangle rect = rectObj.getRectangle();
+                Vector2 size = new Vector2((rect.x + rect.width / 2) / 2 / Constants.PPM,
+                        (rect.y + rect.height / 2) / 2 / Constants.PPM);
+                System.out.println(size.x + "\t" + size.y);
+                createKinematicEntity(world, size, rect.width, rect.height, shape, Constants.BIT_ENEMY, Constants.BIT_PLAYER, userdata);
             } else {
+
                 continue;
             }
 
             shape.dispose();
 
         }
-        if(layer == 3) {
+        if (layer == 3) {
             for (int i = 0; i < player.size(); i++) {
                 if (player.get(i) != null)
                     player.get(i).setTokens(token);
@@ -150,8 +159,6 @@ public class EntityManager implements entityBuilder {
     public void createKinematicEntity(final World world, Vector2 position, float width, float height, Shape shape, short cBits, short mBits, String userdata) {
         Body body;
         body = buildBox2dBody(world, BodyDef.BodyType.KinematicBody, shape, cBits, mBits, userdata);
-        if(userdata == "reset")
-            body.setLinearVelocity(.5f,0);
         kinematicEntity kEntity = new kinematicEntity(world, position.x, position.y, width, height, cBits, mBits, body, userdata);
         kinematicEntities.add(kEntity);
     }

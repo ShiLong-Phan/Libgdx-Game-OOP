@@ -58,8 +58,8 @@ public class Player extends Entity {
     public void render(SpriteBatch batch){
         Sprite s = new Sprite(characterSprite);
         s.flip(flip,false);
-        s.setPosition(super.getBody().getPosition().x * PPM - s.getWidth() / 2,
-                super.getBody().getPosition().y * PPM - s.getHeight() / 2);
+        s.setPosition(body.getPosition().x * PPM - s.getWidth() / 2,
+                body.getPosition().y * PPM - s.getHeight() / 2);
         s.draw(batch);
     }
 
