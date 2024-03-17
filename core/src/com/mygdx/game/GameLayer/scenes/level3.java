@@ -40,7 +40,7 @@ public class level3 extends GameScene {
 
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
 
-        world.setContactListener(collisionHandler = gsm.getEntityManager().getCollisionManager().getCollisionHandler());
+        world.setContactListener(gsm.getEntityManager().getCollisionManager().getCollisionHandler());
         b2dr = new Box2DDebugRenderer(
                 /*drawBodies*/true,
                 /*drawJoints*/false,
@@ -62,7 +62,7 @@ public class level3 extends GameScene {
         pixmap.dispose();
         pixmapOriginal.dispose();
 
-        map = new TmxMapLoader().load("maps/map1.tmx");
+        map = new TmxMapLoader().load("maps/map3.tmx");
         for (int i = 0; i < map.getLayers().size() - 1; i++) {
             gsm.getEntityManager().parseTileLayerEntities(world, map.getLayers().get(i + 1).getObjects(), i);
         }

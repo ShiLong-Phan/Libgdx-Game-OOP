@@ -138,6 +138,8 @@ public abstract class Entity {
                     batch.draw(tex, body.getPosition().x * PPM - tex.getWidth() / 2 - 1,
                             body.getPosition().y * PPM - tex.getHeight() / 2);
                 } else {
+                    x = x + this.body.getLinearVelocity().x /PPM / 2;
+                    y = y + this.body.getLinearVelocity().y /PPM / 2;
                     batch.draw(tex, x * PPM - tex.getWidth() / 2 - 1,
                             y * PPM - tex.getHeight() / 2);
                 }

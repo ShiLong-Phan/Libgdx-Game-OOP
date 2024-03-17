@@ -44,11 +44,8 @@ public class CollisionHandler implements ContactListener {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
 
-        if ((fa.getUserData() == "player" || fb.getUserData() == "player") && (fa.getUserData() == "ground" || fb.getUserData() == "onGround")) {
-            if(fa.getBody().getType() == BodyDef.BodyType.KinematicBody || fb.getBody().getType() == BodyDef.BodyType.KinematicBody)
-                System.out.println("jump from moving platform");
+        if ((fa.getUserData() == "player" || fb.getUserData() == "player") && (fa.getUserData() == "ground" || fb.getUserData() == "ground")) {
             onGround = false;
-            System.out.println("jump from moving platform");
 
         }
         if ((fa.getUserData() == "player" || fb.getUserData() == "player") && (fa.getUserData() == "reset" || fb.getUserData() == "reset"))

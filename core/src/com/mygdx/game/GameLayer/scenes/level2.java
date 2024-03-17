@@ -91,7 +91,6 @@ public class level2 extends GameScene {
             musicPlayer.stop();
             gsm.setState(GameSceneManager.Scene.LEVEL2);
         }
-        //if stage completed go to next scene
 
     }
 

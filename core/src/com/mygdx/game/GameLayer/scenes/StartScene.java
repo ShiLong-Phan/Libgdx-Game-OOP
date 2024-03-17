@@ -66,7 +66,7 @@ public class StartScene extends GameScene {
 
             //resize bg image
             Pixmap pixmap;
-            Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("backgrounds/main page background.jpg"));
+            Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("backgrounds/main page background.png"));
             pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), pixmapOriginal.getFormat());
             pixmap.drawPixmap(pixmapOriginal, 0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(), 0, 0, pixmap.getWidth(), pixmap.getHeight());
             backgroundTexture = new Texture(pixmap);

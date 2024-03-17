@@ -49,6 +49,11 @@ public class Application extends ApplicationAdapter {
 
         tmr = new OrthogonalTiledMapRenderer[3];
 
+        //lvl1
+        TiledMap map1 = new TmxMapLoader().load("maps/map1.tmx");
+        tmr[0] = new OrthogonalTiledMapRenderer(map1, .5f);
+        tmr[0].setView(camera);
+
         //lvl2
         TiledMap map2 = new TmxMapLoader().load("maps/map2.tmx");
         tmr[1] = new OrthogonalTiledMapRenderer(map2, .5f);
@@ -56,7 +61,7 @@ public class Application extends ApplicationAdapter {
 
 
         //lvl3
-        TiledMap map3 = new TmxMapLoader().load("maps/map1.tmx");
+        TiledMap map3 = new TmxMapLoader().load("maps/map3.tmx");
         tmr[2] = new OrthogonalTiledMapRenderer(map3, .5f);
         tmr[2].setView(camera);
     }
@@ -78,9 +83,9 @@ public class Application extends ApplicationAdapter {
         System.out.println("Lifecycle Ended");
         gsm.dispose();
         batch.dispose();
-        tmr[1].dispose();
-        tmr[2].dispose();
-
+        for(int i = 0; i < tmr.length; i++){
+            tmr[i].dispose();
+        }
     }
 
     public SpriteBatch getSpriteBatch() {

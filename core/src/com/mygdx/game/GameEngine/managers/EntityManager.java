@@ -139,7 +139,7 @@ public class EntityManager implements entityBuilder {
             }
 
             shape.dispose();
-            for(int i =0; i < player.size(); i++){
+            for (int i = 0; i < player.size(); i++) {
                 if (player.get(i) != null)
                     player.get(i).setTokens(token);
             }
@@ -266,7 +266,7 @@ public class EntityManager implements entityBuilder {
     }
 
     public Entity createStaticEntity(final World world, float x, float y, float width, float height,
-                                   boolean fixedRotation, short cBits, short mBits, String userdata) {
+                                     boolean fixedRotation, short cBits, short mBits, String userdata) {
 
         //define physical quality friction,initial position, moves or no etc
         BodyDef def = new BodyDef();
@@ -303,7 +303,7 @@ public class EntityManager implements entityBuilder {
     }
 
     public Entity createDynamicEntity(final World world, float x, float y, float width, float height,
-                                    boolean fixedRotation, short cBits, short mBits, String userdata) {
+                                      boolean fixedRotation, short cBits, short mBits, String userdata) {
 
         //define physical quality friction,initial position, moves or no etc
         BodyDef def = new BodyDef();
@@ -347,38 +347,38 @@ public class EntityManager implements entityBuilder {
         this.player.remove(player);
         createPlayer(player.getWorld(), player.getX(), player.getY(), player.getWidth(), player.getHeight(),
                 player.getcBits(), player.getmBits()).getBody();
-        for(int i = 0; i < this.player.size(); i++){
-            if(this.player.get(i) != null){
+        for (int i = 0; i < this.player.size(); i++) {
+            if (this.player.get(i) != null) {
                 this.player.get(i).setTokens(player.getTokens());
             }
         }
     }
 
     public void update(float delta, SpriteBatch batch) {
+        //update movement
         gsm.getPlayerControlManager().PlayerUpdate(player, delta, collisionManager.getOnGround());
-        if (delta >= 0) {
-            if (collisionManager.getIfReset()) {
-                for (int i = 0; i < player.size(); i++) {
-                    if (player.get(i) != null) {
-                        recreatePlayer(player.get(i));
-                        while (!RemovalStack.empty()) {
-                            player.get(i).getWorld().destroyBody(RemovalStack.pop().getBody());
-                            System.out.println("deleted");
-                        }
+        //check if touched water if so recreate char
+        if (collisionManager.getIfReset()) {
+            for (int i = 0; i < player.size(); i++) {
+                if (player.get(i) != null) {
+                    recreatePlayer(player.get(i));
+                    while (!RemovalStack.empty()) {
+                        player.get(i).getWorld().destroyBody(RemovalStack.pop().getBody());
+                        System.out.println("deleted");
                     }
                 }
             }
         }
-
-        if(collisionManager.getOnCollection() != null) {
+        //check for colliding with fruits & veg if so thn reduce token to collect by 1
+        if (collisionManager.getOnCollection() != null) {
             for (int i = 0; i < kinematicEntities.size(); i++) {
                 if (kinematicEntities.get(i).getBody() == collisionManager.getOnCollection()) {
                     removeBody(kinematicEntities.get(i));
                     //reduce tokens to be collected by 1
-                    for(int j = 0; j < player.size(); j++){
-                        if (player.get(j) != null){
-                            if(player.get(j).getTokens() != 0)
-                                player.get(j).setTokens(player.get(j).getTokens()-1);
+                    for (int j = 0; j < player.size(); j++) {
+                        if (player.get(j) != null) {
+                            if (player.get(j).getTokens() != 0)
+                                player.get(j).setTokens(player.get(j).getTokens() - 1);
                             break;
                         }
                     }
@@ -386,13 +386,15 @@ public class EntityManager implements entityBuilder {
                 }
             }
         }
-        for (Entity e: kinematicEntities){
-            if(e.getTex() != null) {
+        for (Entity e : kinematicEntities) {
+            if (e.getTex() != null) {
                 e.render(batch);
+                System.out.println(e.getBody().getLinearVelocity().y);
+
             }
         }
-        for (Player e: player){
-            if(e != null)
+        for (Player e : player) {
+            if (e != null)
                 e.render(batch);
         }
 
@@ -402,12 +404,14 @@ public class EntityManager implements entityBuilder {
         while (!RemovalStack.empty()) {
             try {
                 player.get(0).getWorld().destroyBody(RemovalStack.pop().getBody());
-            }catch (Exception e){
+            } catch (Exception e) {
             }
         }
     }
 
-    public CollisionManager getCollisionManager(){return collisionManager;}
+    public CollisionManager getCollisionManager() {
+        return collisionManager;
+    }
 
 
 }
