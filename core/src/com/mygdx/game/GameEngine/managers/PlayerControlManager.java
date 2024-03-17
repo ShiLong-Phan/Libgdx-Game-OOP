@@ -46,7 +46,7 @@ public class PlayerControlManager {
     }*/
 
     public void PlayerUpdate(ArrayList<Player> players, float delta, boolean onGround) {
-        int horizontalForce = 0, verticalForce = 0;
+        int horizontalForce = 0;
 
         if (gsm.getIOManager().moveLeft()) { //move left
             horizontalForce -= 1;

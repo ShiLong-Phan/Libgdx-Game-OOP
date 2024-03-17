@@ -2,8 +2,12 @@ package com.mygdx.game.GameEngine.scene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Application;
 import com.mygdx.game.GameEngine.managers.GameSceneManager;
@@ -16,11 +20,32 @@ public abstract class GameScene {
     protected OrthographicCamera camera;
     protected Music musicPlayer;
 
+    protected BitmapFont font;
+    protected String details = "";
+    protected int fontSize = 22;
+    protected GlyphLayout layout;
+    protected FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+
     protected GameScene(GameSceneManager gsm){
         this.gsm = gsm;
         this.app = gsm.getApp();
         batch = this.app.getSpriteBatch();
         camera = this.app.getCamera();
+
+        //font
+        FreeTypeFontGenerator generator;
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Super Milk.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.color = Color.BLACK;
+
+        //font layout
+        parameter.size = fontSize;
+        font = generator.generateFont(parameter);
+        layout = new GlyphLayout(font, details);
+        generator.dispose();
+
+
+
     }
 
     public void resize(int w, int h){

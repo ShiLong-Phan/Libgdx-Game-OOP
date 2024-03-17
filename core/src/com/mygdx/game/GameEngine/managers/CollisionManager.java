@@ -19,9 +19,6 @@ public class CollisionManager {
         this.collisionHandler = collisionHandler;
     }
 
-    public boolean checkCollision(){
-        return collisionHandler.getPuzzleCompletion();
-    }
 
     public boolean getOnGround(){
         return collisionHandler.getOnGround();

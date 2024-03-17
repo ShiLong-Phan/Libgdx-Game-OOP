@@ -43,7 +43,7 @@ public class Application extends ApplicationAdapter {
         System.out.println("Scene Manager Created");
 
         tokenImages.add("sprites/apple.png");
-        tokenImages.add("sprites/banana.png");
+        tokenImages.add("sprites/watermelon.png");
         tokenImages.add("sprites/carrot.png");
         tokenImages.add("sprites/celery.png");
 

@@ -15,15 +15,13 @@ import static com.mygdx.game.GameEngine.utils.Constants.PPM;
 public class Player extends Entity {
     private int tokens;
     private int lives;
-    private Texture[] characterSprite;
+    private Texture characterSprite;
     private boolean flip;
 
 
     public Player(final World world, float x, float y, float width, float height, short cBits, short mBits, Body body) {
         super(world, x,y,width,height, 2, true,cBits, mBits, body, "player");
         flip = true;
-
-        characterSprite = new Texture[4];
 
         lives = 3;
 
@@ -34,9 +32,7 @@ public class Player extends Entity {
         pixmap.drawPixmap(pixmapOriginal,0,0,pixmapOriginal.getWidth(),pixmapOriginal.getHeight(),0,0, pixmap.getWidth(), pixmap.getHeight());
         Texture tex;
         tex = new Texture(pixmap);
-        characterSprite[0] = tex;
-        //characterSprite[0] = new TextureRegion(tex,0,0,width,height);
-        //tex = characterSprite[0].getTexture();
+        characterSprite = tex;
         super.setTex(tex);
         pixmap.dispose();
         pixmapOriginal.dispose();
@@ -60,7 +56,7 @@ public class Player extends Entity {
     }
 
     public void render(SpriteBatch batch){
-        Sprite s = new Sprite(characterSprite[0]);
+        Sprite s = new Sprite(characterSprite);
         s.flip(flip,false);
         s.setPosition(super.getBody().getPosition().x * PPM - s.getWidth() / 2,
                 super.getBody().getPosition().y * PPM - s.getHeight() / 2);

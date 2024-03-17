@@ -3,6 +3,7 @@ package com.mygdx.game.GameLayer.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -46,6 +47,17 @@ public class kinematicEntity extends Entity {
             super.setTex(tex);
             pixmap.dispose();
             pixmapOriginal.dispose();
+        } else if (userdata == "reset") {
+            super.setX(x/PPM);
+            super.setY(y/PPM);
+            pixmapOriginal = new Pixmap(Gdx.files.internal("sprites/burger.png"));
+            pixmap = new Pixmap((int) width, (int) height, pixmapOriginal.getFormat());
+            pixmap.drawPixmap(pixmapOriginal, 0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(), 0, 0, pixmap.getWidth(), pixmap.getHeight());
+            Texture tex;
+            tex = new Texture(pixmap);
+            super.setTex(tex);
+            pixmap.dispose();
+            pixmapOriginal.dispose();
         }
 
 
@@ -55,4 +67,21 @@ public class kinematicEntity extends Entity {
         super(world, shape, 2, true, cBits, mBits, body, userdata);
     }
 
+
+    @Override
+    public void render(SpriteBatch batch) {
+        if (super.getTex() != null) {
+            if (this instanceof kinematicEntity) {
+                if (super.getEntityData() == "ground") {
+                    batch.draw(super.getTex(), super.getBody().getPosition().x * PPM - super.getTex().getWidth() / 2 - 1,
+                            super.getBody().getPosition().y * PPM - super.getTex().getHeight() / 2);
+                } else if (super.getEntityData() == "token") {
+                    super.setX(super.getX() + super.getBody().getLinearVelocity().x /PPM / 2);
+                    super.setY(super.getY() + super.getBody().getLinearVelocity().y /PPM / 2);
+                    batch.draw(super.getTex(), super.getX() * PPM - super.getTex().getWidth() / 2 - 1,
+                            super.getY() * PPM - super.getTex().getHeight() / 2);
+                }
+            }
+        }
+    }
 }

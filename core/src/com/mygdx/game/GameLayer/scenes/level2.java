@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
@@ -30,30 +32,22 @@ public class level2 extends GameScene {
     //background texture
     private Texture backgroundTexture;
 
+    //colelctible
+    private int collectable = 0;
+
     public level2(GameSceneManager gsm) {
         super(gsm);
         //music
         super.playGameMusic();
 
+
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
         world.setContactListener(gsm.getEntityManager().getCollisionManager().getCollisionHandler());
-        b2dr = new Box2DDebugRenderer(
-                /*drawBodies*/true,
-                /*drawJoints*/false,
-                /*drawAABBs*/false,
-                /*drawInactiveBodies*/false,
-                /*drawVelocities*/false,
-                /*drawContacts*/false
-        );
 
-
-        player = gsm.getEntityManager().createPlayer(world, 25, 100, 20, 23, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL | Constants.BIT_BLOCK | Constants.BIT_END));
+        player = gsm.getEntityManager().createPlayer(world, 25, 100, 20, 23, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL| Constants.BIT_ENEMY));
 
 
         map = new TmxMapLoader().load("maps/map2.tmx");
-        //tmr = new OrthogonalTiledMapRenderer(map, 1 / Application.SCALE);
-        //tmr.setView(camera);
-        //for(int i = 0; i < map.getLayers().size(); i++) {
 
         for (int i = 0; i < map.getLayers().size() - 1; i++) {
             gsm.getEntityManager().parseTileLayerEntities(world, map.getLayers().get(i + 1).getObjects(), i);
@@ -68,7 +62,7 @@ public class level2 extends GameScene {
         pixmap.dispose();
         pixmapOriginal.dispose();
 
-
+        collectable = player.getTokens();
     }
 
     @Override
@@ -76,18 +70,28 @@ public class level2 extends GameScene {
         world.step(1 / 75f, 6, 2); //just use 6 and 2
 
         cameraUpdate();
+        for (int i = 0; i < gsm.getEntityManager().getPlayer().size(); i++) {
+            if (gsm.getEntityManager().getPlayer().get(i) != null) {
+                player = gsm.getEntityManager().getPlayer().get(i);
+                break;
+            }
+        }
+        //set details
+        layout.setText(super.font, collectable - player.getTokens() + "/" + collectable + "\nLives: " + player.getLives());
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         //draw background
         batch.draw(backgroundTexture, 0, 0);
-
+        //write details
+        super.font.draw(batch, layout, 20, Gdx.graphics.getHeight() / 2 - 20);
         //update all entities
         gsm.getEntityManager().update(delta, batch);
         batch.end();
 
         accumulator += delta;
         //if r key is pressed restart scene
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R) && accumulator > 0.5) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R) && accumulator > 0.5 || player.getLives() == 0) {
             musicPlayer.stop();
             gsm.setState(GameSceneManager.Scene.LEVEL2);
         }
@@ -100,7 +104,6 @@ public class level2 extends GameScene {
 
         update(Gdx.graphics.getDeltaTime());
         Constants.tmr[1].render();
-        b2dr.render(world, camera.combined.scl(Constants.PPM));
         if (gsm.getEntityManager().getPlayer().get(0).getTokens() == 0) {
             accumulator2 += Gdx.graphics.getDeltaTime();
             if (accumulator2 > .5) {
@@ -119,7 +122,6 @@ public class level2 extends GameScene {
 
         System.out.println("Scene Disposed");
         world.dispose();
-        b2dr.dispose();
         gsm.getEntityManager().dispose();
         map.dispose();
 

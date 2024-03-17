@@ -14,7 +14,6 @@ import com.mygdx.game.GameEngine.interfaces.entityBuilder;
 import com.mygdx.game.GameEngine.utils.Constants;
 import com.mygdx.game.GameEngine.utils.TiledObjectRender;
 import com.mygdx.game.GameLayer.entities.Player;
-import com.mygdx.game.GameLayer.entities.dynamicEntity;
 import com.mygdx.game.GameLayer.entities.kinematicEntity;
 import com.mygdx.game.GameLayer.entities.staticEntity;
 
@@ -25,7 +24,6 @@ public class EntityManager implements entityBuilder {
     private static ArrayList<Player> player = new ArrayList<>();
     private static ArrayList<Entity> staticEntities = new ArrayList<>();
     private static ArrayList<Entity> kinematicEntities = new ArrayList<>();
-    private static ArrayList<Entity> dynamicEntities = new ArrayList<>();
     private static Stack<Entity> RemovalStack = new Stack<>();
     private static AIControlManager aiManager;
     private static CollisionManager collisionManager;
@@ -46,10 +44,6 @@ public class EntityManager implements entityBuilder {
         return kinematicEntities;
     }
 
-    public ArrayList<Entity> getDynamicBody() {
-        return dynamicEntities;
-    }
-
     public ArrayList<Player> getPlayer() {
         return player;
     }
@@ -62,9 +56,6 @@ public class EntityManager implements entityBuilder {
         kinematicEntities.add(entity);
     }
 
-    public void addDynamicEntity(Entity entity) {
-        dynamicEntities.add(entity);
-    }
 
     public void addPlayer(Player player) {
         this.player.add(player);
@@ -77,9 +68,6 @@ public class EntityManager implements entityBuilder {
         } else if (kinematicEntities.contains(entity)) {
             kinematicEntities.remove(entity);
             RemovalStack.push(entity);
-        } else if (dynamicEntities.contains(entity)) {
-            dynamicEntities.remove(entity);
-            RemovalStack.push(entity);
         }
     }
 
@@ -91,7 +79,6 @@ public class EntityManager implements entityBuilder {
     public void dispose() {
         player.clear();
         staticEntities.clear();
-        dynamicEntities.clear();
         kinematicEntities.clear();
         aiManager.resetAll();
         System.out.println("Entities Disposed");
@@ -136,9 +123,14 @@ public class EntityManager implements entityBuilder {
                 Vector2 size = new Vector2((rect.x + rect.width / 2) / 2 / Constants.PPM,
                         (rect.y + rect.height / 2) / 2 / Constants.PPM);
                 createKinematicEntity(world, size, rect.width, rect.height, shape, Constants.BIT_WALL, Constants.BIT_PLAYER, userdata);
+            } else {
+                continue;
             }
 
             shape.dispose();
+
+        }
+        if(layer == 3) {
             for (int i = 0; i < player.size(); i++) {
                 if (player.get(i) != null)
                     player.get(i).setTokens(token);
@@ -149,56 +141,36 @@ public class EntityManager implements entityBuilder {
     //map render entity creation
     public void createStaticEntity(final World world, Shape shape, short cBits, short mBits, String userdata) {
         Body body;
-        BodyDef bdef = new BodyDef();
-        FixtureDef fixtureDef = new FixtureDef();
-
-        fixtureDef.friction = 0f;
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1.0f;
-        bdef.type = BodyDef.BodyType.StaticBody;
-        fixtureDef.filter.categoryBits = cBits;
-        fixtureDef.filter.maskBits = mBits;
-        body = world.createBody(bdef);
-        body.createFixture(fixtureDef).setUserData(userdata);
+        body = buildBox2dBody(world, BodyDef.BodyType.StaticBody, shape, cBits, mBits, userdata);
 
         staticEntity sEntity = new staticEntity(world, shape, cBits, mBits, body, userdata);
         staticEntities.add(sEntity);
     }
 
-    public void createDynamicEntity(final World world, Shape shape, short cBits, short mBits, String userdata) {
-        Body body;
-        BodyDef bdef = new BodyDef();
-        FixtureDef fixtureDef = new FixtureDef();
-
-        fixtureDef.friction = 0f;
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1.0f;
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        fixtureDef.filter.categoryBits = cBits;
-        fixtureDef.filter.maskBits = mBits;
-        body = world.createBody(bdef);
-        body.createFixture(fixtureDef).setUserData(userdata);
-
-        dynamicEntity dEntity = new dynamicEntity(world, shape, cBits, mBits, body, userdata);
-        dynamicEntities.add(dEntity);
-    }
-
     public void createKinematicEntity(final World world, Vector2 position, float width, float height, Shape shape, short cBits, short mBits, String userdata) {
         Body body;
+        body = buildBox2dBody(world, BodyDef.BodyType.KinematicBody, shape, cBits, mBits, userdata);
+        if(userdata == "reset")
+            body.setLinearVelocity(.5f,0);
+        kinematicEntity kEntity = new kinematicEntity(world, position.x, position.y, width, height, cBits, mBits, body, userdata);
+        kinematicEntities.add(kEntity);
+    }
+
+
+    public Body buildBox2dBody(final World world, BodyDef.BodyType bodyType, Shape shape, short cBits, short mBits, String userdata) {
+        Body body;
         BodyDef bdef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
 
         fixtureDef.friction = 0f;
         fixtureDef.shape = shape;
         fixtureDef.density = 1.0f;
-        bdef.type = BodyDef.BodyType.KinematicBody;
+        bdef.type = bodyType;
         fixtureDef.filter.categoryBits = cBits;
         fixtureDef.filter.maskBits = mBits;
         body = world.createBody(bdef);
         body.createFixture(fixtureDef).setUserData(userdata);
-
-        kinematicEntity kEntity = new kinematicEntity(world, position.x, position.y, width, height, cBits, mBits, body, userdata);
-        kinematicEntities.add(kEntity);
+        return body;
     }
 
     //player creation
@@ -302,44 +274,6 @@ public class EntityManager implements entityBuilder {
 
     }
 
-    public Entity createDynamicEntity(final World world, float x, float y, float width, float height,
-                                      boolean fixedRotation, short cBits, short mBits, String userdata) {
-
-        //define physical quality friction,initial position, moves or no etc
-        BodyDef def = new BodyDef();
-        def.position.set(x / Constants.PPM, y / Constants.PPM); //set position
-
-        def.type = BodyDef.BodyType.DynamicBody;
-
-        def.fixedRotation = fixedRotation; //if false will rotate after being interacted
-
-        //give shape box2d works from middle thus /2
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2 / Constants.PPM, height / 2 / Constants.PPM); //if getting box2d units divide if giving thn multiply
-
-        //no friction so cant climb walls
-        FixtureDef fdef = new FixtureDef();
-        fdef.shape = shape;
-        fdef.density = 1.0f;
-        fdef.friction = 1f;
-        fdef.restitution = 0.15f;
-        fdef.filter.categoryBits = cBits; //is a
-        fdef.filter.maskBits = mBits; // collides with
-
-        Body bod = world.createBody(def);
-        if (userdata == null)
-            bod.createFixture(fdef).setUserData(this);
-        else
-            bod.createFixture(fdef).setUserData(userdata);
-
-        dynamicEntity dbod = new dynamicEntity(world, x, y, width, height, cBits, mBits, bod, userdata);
-
-        addDynamicEntity(dbod);
-
-        System.out.println("Dynamic Body Created");
-        return dbod;
-
-    }
 
     //upon landing in reset zone recreatePlayer at starting location
     private void recreatePlayer(Player player) {
@@ -350,6 +284,7 @@ public class EntityManager implements entityBuilder {
         for (int i = 0; i < this.player.size(); i++) {
             if (this.player.get(i) != null) {
                 this.player.get(i).setTokens(player.getTokens());
+                this.player.get(i).setLives(player.getLives() - 1);
             }
         }
     }
@@ -389,7 +324,6 @@ public class EntityManager implements entityBuilder {
         for (Entity e : kinematicEntities) {
             if (e.getTex() != null) {
                 e.render(batch);
-                System.out.println(e.getBody().getLinearVelocity().y);
 
             }
         }
@@ -399,8 +333,6 @@ public class EntityManager implements entityBuilder {
         }
 
         aiManager.moveBody(kinematicEntities);
-        if (collisionManager.checkCollision())
-            aiManager.showEndPoint(kinematicEntities, 4.5f);
         while (!RemovalStack.empty()) {
             try {
                 player.get(0).getWorld().destroyBody(RemovalStack.pop().getBody());

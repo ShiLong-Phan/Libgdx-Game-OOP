@@ -22,9 +22,7 @@ import com.mygdx.game.GameEngine.utils.Constants;
 
 public class level3 extends GameScene {
 
-    private Box2DDebugRenderer b2dr;
     private World world;
-    private CollisionHandler collisionHandler;
     private Player player;
     private float accumulator = 0;
 
@@ -32,6 +30,8 @@ public class level3 extends GameScene {
 
     private Texture backgroundTexture;
 
+    //colelctible
+    private int collectable = 0;
 
     public level3(GameSceneManager gsm) {
         super(gsm);
@@ -41,17 +41,9 @@ public class level3 extends GameScene {
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
 
         world.setContactListener(gsm.getEntityManager().getCollisionManager().getCollisionHandler());
-        b2dr = new Box2DDebugRenderer(
-                /*drawBodies*/true,
-                /*drawJoints*/false,
-                /*drawAABBs*/false,
-                /*drawInactiveBodies*/false,
-                /*drawVelocities*/false,
-                /*drawContacts*/false
-        );
 
 
-        player = gsm.getEntityManager().createPlayer(world, 25, 100, 20, 23, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL | Constants.BIT_BLOCK | Constants.BIT_END));
+        player = gsm.getEntityManager().createPlayer(world, 25, 100, 20, 23, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL | Constants.BIT_ENEMY));
 
         //resize bg image
         Pixmap pixmap;
@@ -68,23 +60,36 @@ public class level3 extends GameScene {
         }
 
 
-
         //add moving platform
         Entity movingPlatform = gsm.getEntityManager().createKinematicEntity(world, 385,175 ,50,16, true, Constants.BIT_WALL, (short) (Constants.BIT_PLAYER | Constants.BIT_WALL), "ground");
         System.out.println(movingPlatform.getTex());
 
+        collectable = player.getTokens();
     }
 
     @Override
     public void update(float delta) {
-        cameraUpdate();
 
         world.step(1 / 75f, 6, 2); //just use 6 and 2
+
+        cameraUpdate();
+
+        for (int i = 0; i < gsm.getEntityManager().getPlayer().size(); i++) {
+            if (gsm.getEntityManager().getPlayer().get(i) != null) {
+                player = gsm.getEntityManager().getPlayer().get(i);
+                break;
+            }
+        }
+        //set details
+        layout.setText(super.font, collectable - player.getTokens() + "/" + collectable + "\nLives: " + player.getLives());
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         //draw background
         batch.draw(backgroundTexture, 0, 0);
+
+        //write details
+        super.font.draw(batch, layout, 20, Gdx.graphics.getHeight() / 2 - 20);
 
         //update all entities
         gsm.getEntityManager().update(delta, batch);
@@ -92,7 +97,7 @@ public class level3 extends GameScene {
 
         accumulator += delta;
         //if r key is pressed restart scene
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R) && accumulator > 0.5) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R) && accumulator > 0.5 || player.getLives() == 0) {
             musicPlayer.stop();
             gsm.setState(GameSceneManager.Scene.LEVEL3);
         }
@@ -107,7 +112,6 @@ public class level3 extends GameScene {
 
         update(Gdx.graphics.getDeltaTime());
         Constants.tmr[2].render();
-        b2dr.render(world, camera.combined.scl(Constants.PPM));
         if (gsm.getEntityManager().getPlayer().get(0).getTokens() == 0 && accumulator > 0.5) {
             musicPlayer.stop();
             gsm.setState(GameSceneManager.Scene.END);
@@ -126,7 +130,6 @@ public class level3 extends GameScene {
         gsm.getEntityManager().dispose();
         map.dispose();
         world.dispose();
-        b2dr.dispose();
     }
 
 

@@ -1,5 +1,6 @@
 package com.mygdx.game.GameLayer.entities;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -17,4 +18,8 @@ public class staticEntity extends Entity {
     }
 
 
+    @Override
+    public void render(SpriteBatch batch) {
+
+    }
 }

@@ -51,6 +51,10 @@ public abstract class Entity {
         return body;
     }
 
+    public void setBody(Body body) {
+        this.body = body;
+    }
+
     public World getWorld() {
         return world;
     }
@@ -131,19 +135,6 @@ public abstract class Entity {
         return tex;
     }
 
-    public void render(SpriteBatch batch) {
-        if (tex != null) {
-            if (this instanceof kinematicEntity) {
-                if (entityData == "ground") {
-                    batch.draw(tex, body.getPosition().x * PPM - tex.getWidth() / 2 - 1,
-                            body.getPosition().y * PPM - tex.getHeight() / 2);
-                } else {
-                    x = x + this.body.getLinearVelocity().x /PPM / 2;
-                    y = y + this.body.getLinearVelocity().y /PPM / 2;
-                    batch.draw(tex, x * PPM - tex.getWidth() / 2 - 1,
-                            y * PPM - tex.getHeight() / 2);
-                }
-            }
-        }
-    }
+    public abstract void render(SpriteBatch batch);
+
 }

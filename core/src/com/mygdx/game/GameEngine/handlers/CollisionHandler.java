@@ -5,7 +5,6 @@ import com.badlogic.gdx.physics.box2d.*;
 
 public class CollisionHandler implements ContactListener {
 
-    private static boolean puzzleCompletion = false;
     private static boolean onGround = false;
     private static boolean onReset = false;
     private static boolean collect = false;
@@ -16,6 +15,9 @@ public class CollisionHandler implements ContactListener {
     public void beginContact(Contact contact) {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
+        if (fa.getUserData() == null || fb.getUserData() == null) return;
+
+
         if (fa.getUserData() == "ground" || fb.getUserData() == "ground") {
             onGround = true;
         }
@@ -33,9 +35,7 @@ public class CollisionHandler implements ContactListener {
         if (fa.getUserData() == "end" || fb.getUserData() == "end")
             System.out.println("Collision with ai moved entity Detected");
 
-        if (fa.getUserData() == null || fb.getUserData() == null) return;
-        if ((fa.getUserData() == "sensor" || fb.getUserData() == "sensor") && (fa.getUserData() == "block" || fb.getUserData() == "block"))
-            puzzleCompletion = true;
+
 
     }
 
@@ -81,12 +81,6 @@ public class CollisionHandler implements ContactListener {
                 fb.getBody().setLinearVelocity(playerVelocity.x, playerVelocity.y);
             }
         }
-
-
-    }
-
-    public boolean getPuzzleCompletion() {
-        return puzzleCompletion;
     }
 
 
