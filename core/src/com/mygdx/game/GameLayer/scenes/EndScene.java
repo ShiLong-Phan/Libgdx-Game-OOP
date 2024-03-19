@@ -22,7 +22,7 @@ public class EndScene extends GameScene {
 
         //resize bg image
         Pixmap pixmap;
-        Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("backgrounds/thank you page.jpg"));
+        Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("backgrounds/thank you page.png"));
         pixmap = new Pixmap(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, pixmapOriginal.getFormat());
         pixmap.drawPixmap(pixmapOriginal, 0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(), 0, 0, pixmap.getWidth(), pixmap.getHeight());
         backgroundTexture = new Texture(pixmap);
