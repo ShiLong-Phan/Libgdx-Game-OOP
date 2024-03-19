@@ -90,6 +90,7 @@ public class Application extends ApplicationAdapter {
         for(int i = 0; i < tmr.length; i++){
             tmr[i].dispose();
         }
+        Gdx.app.exit();
     }
 
     public SpriteBatch getSpriteBatch() {

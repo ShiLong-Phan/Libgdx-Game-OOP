@@ -41,8 +41,6 @@ public class EndScene extends GameScene {
             //change scene
             System.out.println("Scene End\n");
             gsm.getApp().dispose();
-            System.exit(0);
-
         }
     }
 
