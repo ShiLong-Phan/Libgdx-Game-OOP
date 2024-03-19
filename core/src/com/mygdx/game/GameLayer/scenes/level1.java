@@ -122,7 +122,6 @@ public class level1 extends GameScene {
         update(Gdx.graphics.getDeltaTime());
         b2dr.render(world, camera.combined.scl(Constants.PPM));
 
-
         //render first tiled map
         Constants.tmr[0].render();
 
@@ -134,17 +133,26 @@ public class level1 extends GameScene {
                 System.out.println(1);
             }
         }
+
+        //restart stage
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            musicPlayer.stop();
+            gsm.setState(GameSceneManager.Scene.LEVEL1);
+        }
+
+        //go back to level select when lives == 0
+        if (gsm.getIOManager().backToLevelSelect() || player.getLives() == 0) {
+            musicPlayer.stop();
+            gsm.setState(GameSceneManager.Scene.LEVELSELECT);
+        }
+
         //for testing purposes go next stage
         if (Gdx.input.isKeyPressed(Input.Keys.U) && accumulator > .3) {
             musicPlayer.stop();
             gsm.setState(GameSceneManager.Scene.LEVEL2);
-
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R) && accumulator > 0.5 || player.getLives() == 0) {
-            musicPlayer.stop();
-            gsm.setState(GameSceneManager.Scene.LEVEL1);
-        }
+
     }
 
     @Override

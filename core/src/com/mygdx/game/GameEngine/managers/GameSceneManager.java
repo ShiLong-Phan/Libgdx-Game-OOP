@@ -17,6 +17,23 @@ public class GameSceneManager {
     private PlayerControlManager playerControlManager;
     private IOManager ioManager;
     private Texture backgroundTexture;
+    private static GameSceneManager gsm = null;
+
+    public static GameSceneManager getGsm(Application app){
+        if(gsm == null){
+            gsm = new GameSceneManager(app);
+        }
+        return gsm;
+    }
+
+    private GameSceneManager(final Application app) {
+        this.app = app;
+        this.playerControlManager = new PlayerControlManager(this);
+        this.ioManager = new IOManager();
+        this.eManager = EntityManager.getEntityManager(this);
+        this.states = new Stack<GameScene>();
+        this.setState(Scene.START);
+    }
 
 
     public enum Scene {
@@ -28,14 +45,6 @@ public class GameSceneManager {
         END
     }
 
-    public GameSceneManager(final Application app) {
-        this.app = app;
-        this.playerControlManager = new PlayerControlManager(this);
-        this.ioManager = new IOManager();
-        this.eManager = new EntityManager(this);
-        this.states = new Stack<GameScene>();
-        this.setState(Scene.START);
-    }
 
     public Application getApp() {
         return app;

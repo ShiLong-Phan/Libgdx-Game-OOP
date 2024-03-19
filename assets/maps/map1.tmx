@@ -68,6 +68,6 @@
   <object id="25" x="640" y="640" width="38" height="38"/>
  </objectgroup>
  <objectgroup id="8" name="Negative Layer">
-  <object id="33" x="464" y="624" width="38" height="38"/>
+  <object id="33" x="480" y="728" width="38" height="38"/>
  </objectgroup>
 </map>

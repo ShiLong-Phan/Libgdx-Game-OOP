@@ -45,7 +45,7 @@ public class level2 extends GameScene {
         world.setContactListener(gsm.getEntityManager().getCollisionManager().getCollisionHandler());
 
         //create player
-        player = gsm.getEntityManager().createPlayer(world, 25, 100, 20, 23, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL| Constants.BIT_ENEMY));
+        player = gsm.getEntityManager().createPlayer(world, 25, 100, 20, 23, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL | Constants.BIT_ENEMY));
 
         //set map
         map = new TmxMapLoader().load("maps/map2.tmx");
@@ -92,15 +92,27 @@ public class level2 extends GameScene {
         batch.end();
 
         accumulator += delta;
+
         //if r key is pressed restart scene
-        if (gsm.getIOManager().restartStage() && accumulator > 0.5 || player.getLives() == 0) {
+        if (gsm.getIOManager().restartStage()) {
             musicPlayer.stop();
             gsm.setState(GameSceneManager.Scene.LEVEL2);
         }
 
-        if (gsm.getIOManager().backToLevelSelect()){
+        //if esc key pressed or lives == 0 back to level select
+        if (gsm.getIOManager().backToLevelSelect() || player.getLives() == 0) {
             musicPlayer.stop();
             gsm.setState(GameSceneManager.Scene.LEVELSELECT);
+        }
+
+        //testing function to go next scene
+        if (Gdx.input.isKeyPressed(Input.Keys.U) && accumulator > .3) {
+            musicPlayer.stop();
+            gsm.setState(GameSceneManager.Scene.LEVEL3);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.I) && accumulator > .3) {
+            musicPlayer.stop();
+            gsm.setState(GameSceneManager.Scene.LEVEL1);
         }
 
     }
@@ -118,10 +130,7 @@ public class level2 extends GameScene {
                 gsm.setState(GameSceneManager.Scene.LEVEL3);
             }
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.U) && accumulator > .3) {
-            musicPlayer.stop();
-            gsm.setState(GameSceneManager.Scene.LEVEL3);
-        }
+
     }
 
     @Override

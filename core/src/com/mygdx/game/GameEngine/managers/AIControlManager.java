@@ -15,16 +15,16 @@ public class AIControlManager {
     public void moveBody(ArrayList<Entity> kinematicEntities) {
         accumulator += Gdx.graphics.getDeltaTime();
         int size = kinematicEntities.size();
-        for (Entity e : kinematicEntities) {
-            if (size % 2 == 0)direction = -direction;
-            if (e.getEntityData() == "ground") {
-                e.getBody().setLinearVelocity(2 * direction, 0);
+        for (int i = 0; i < size; i++) {
+            if (kinematicEntities.get(i) == null)continue;
+            if (kinematicEntities.get(i).getEntityData() == "ground") {
+                kinematicEntities.get(i).getBody().setLinearVelocity(2 * direction, 0);
             }
-            if (e.getEntityData() == "token") {
-                e.getBody().setLinearVelocity( 0, (float).5 * direction);
+            if (kinematicEntities.get(i).getEntityData() == "token") {
+                kinematicEntities.get(i).getBody().setLinearVelocity( 0, (float).5 * direction);
             }
-            if (e.getEntityData() == "reset") {
-                e.getBody().setLinearVelocity(0, (float).75 * direction);
+            if (kinematicEntities.get(i).getEntityData() == "reset") {
+                kinematicEntities.get(i).getBody().setLinearVelocity(0, (float).4 * -direction);
             }
             if (accumulator > 1.5) {
                 if (direction < 0) {

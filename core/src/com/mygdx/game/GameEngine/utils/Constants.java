@@ -1,5 +1,6 @@
 package com.mygdx.game.GameEngine.utils;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import java.util.ArrayList;
@@ -12,4 +13,6 @@ public final class Constants {
     public static final short BIT_ENEMY = 4;
     public static ArrayList<String> tokenImages = new ArrayList<>();
     public static OrthogonalTiledMapRenderer tmr[];
+    public static ArrayList<Texture> textureImage = new ArrayList<>();
+
 }

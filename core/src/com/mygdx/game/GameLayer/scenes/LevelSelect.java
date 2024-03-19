@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.Application;
 import com.mygdx.game.GameEngine.managers.GameSceneManager;
 import com.mygdx.game.GameEngine.scene.GameScene;
 
@@ -16,12 +19,15 @@ public class LevelSelect extends GameScene {
     private Texture[] playButton;
     private float accumulator;
     private float playbuttonX, playbuttonY;
+    private SpriteBatch batch;
+
 
     public LevelSelect(GameSceneManager gsm) {
         super(gsm);
         //play moosic
         super.playStartEndMusic();
 
+        batch = new SpriteBatch();
         //initialize and resize textures
         //vector to detect click position
         vec = new Vector2();
@@ -29,8 +35,8 @@ public class LevelSelect extends GameScene {
 
         //resize bg image
         Pixmap pixmap;
-        Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("backgrounds/game background.jpg"));
-        pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), pixmapOriginal.getFormat());
+        Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("backgrounds/game background.png"));
+        pixmap = new Pixmap((int) (Gdx.graphics.getWidth()), (int) (Gdx.graphics.getHeight()), pixmapOriginal.getFormat());
         pixmap.drawPixmap(pixmapOriginal, 0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(), 0, 0, pixmap.getWidth(), pixmap.getHeight());
         backgroundTexture = new Texture(pixmap);
         pixmap.dispose();
@@ -43,7 +49,6 @@ public class LevelSelect extends GameScene {
         playButton[2] = new Texture(Gdx.files.internal("sprites/level 3 button.png"));
         playbuttonX = Gdx.graphics.getWidth() / 2 - playButton[0].getWidth() / 2;
         playbuttonY = Gdx.graphics.getHeight() / 2 - playButton[0].getHeight() / 2;
-
     }
 
     @Override
@@ -53,6 +58,7 @@ public class LevelSelect extends GameScene {
             vec.x = Gdx.input.getX();
             vec.y = Gdx.input.getY();
             //lvl1 selected
+
             if (vec.x > playbuttonX && vec.x < playbuttonX + playButton[0].getWidth() &&
                     vec.y > playbuttonY/2 && vec.y < playbuttonY/ 2  + playButton[0].getHeight() ) {
 
@@ -73,8 +79,7 @@ public class LevelSelect extends GameScene {
             }
             //lvl3 selected
             if (vec.x > playbuttonX && vec.x < playbuttonX + playButton[0].getWidth() &&
-                    vec.y > playbuttonY*2 - playButton[0].getHeight() && vec.y < playbuttonY*2 + playButton[0].getHeight()) {
-
+                    vec.y > playbuttonY*2 - playButton[0].getHeight()*1.2 && vec.y < playbuttonY*2) {
                 //change scene
                 System.out.println("lvl 3 selected\n");
                 musicPlayer.stop();

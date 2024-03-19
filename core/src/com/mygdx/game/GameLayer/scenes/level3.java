@@ -97,14 +97,20 @@ public class level3 extends GameScene {
 
         accumulator += delta;
         //if r key is pressed restart scene
-        if (gsm.getIOManager().restartStage() && accumulator > 0.5 || player.getLives() == 0) {
+        if (gsm.getIOManager().restartStage() && accumulator > 0.5) {
             musicPlayer.stop();
             gsm.setState(GameSceneManager.Scene.LEVEL3);
         }
         //if escape is pressed go back to level select
-        if (gsm.getIOManager().backToLevelSelect()){
+        if (gsm.getIOManager().backToLevelSelect()  || player.getLives() == 0){
             musicPlayer.stop();
             gsm.setState(GameSceneManager.Scene.LEVELSELECT);
+        }
+
+        //for testing.
+        if(Gdx.input.isKeyPressed(Input.Keys.U) && accumulator > .3){
+            musicPlayer.stop();
+            gsm.setState(GameSceneManager.Scene.LEVEL2);
         }
 
     }
@@ -119,10 +125,7 @@ public class level3 extends GameScene {
             musicPlayer.stop();
             gsm.setState(GameSceneManager.Scene.END);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.U) && accumulator > .3 ){
-            musicPlayer.stop();
-            gsm.setState(GameSceneManager.Scene.LEVEL2);
-        }
+
 
     }
 

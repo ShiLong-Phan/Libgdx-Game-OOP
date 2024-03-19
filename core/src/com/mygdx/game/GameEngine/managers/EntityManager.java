@@ -28,12 +28,19 @@ public class EntityManager implements entityBuilder {
     private static AIControlManager aiManager;
     private static CollisionManager collisionManager;
     private final GameSceneManager gsm;
+    private static EntityManager eManager;
 
-    public EntityManager(GameSceneManager gsm) {
-
+    private EntityManager(GameSceneManager gsm) {
         this.gsm = gsm;
         aiManager = new AIControlManager();
         collisionManager = new CollisionManager();
+    }
+
+    public static EntityManager getEntityManager(GameSceneManager gsm){
+        if(eManager == null){
+            eManager = new EntityManager(gsm);
+        }
+        return eManager;
     }
 
     public ArrayList<Entity> getStaticBody() {
@@ -306,7 +313,6 @@ public class EntityManager implements entityBuilder {
                     recreatePlayer(player.get(i));
                     while (!RemovalStack.empty()) {
                         player.get(i).getWorld().destroyBody(RemovalStack.pop().getBody());
-                        System.out.println("deleted");
                     }
                 }
             }

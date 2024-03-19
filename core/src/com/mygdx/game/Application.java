@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.mygdx.game.GameEngine.managers.EntityManager;
 import com.mygdx.game.GameEngine.managers.GameSceneManager;
 
 import static com.mygdx.game.GameEngine.utils.Constants.tmr;
@@ -39,7 +40,7 @@ public class Application extends ApplicationAdapter {
         //camera
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w / SCALE, h / SCALE);
-        gsm = new GameSceneManager(this);
+        gsm = GameSceneManager.getGsm(this);
         System.out.println("Scene Manager Created");
 
         //add immages for collection
@@ -93,10 +94,6 @@ public class Application extends ApplicationAdapter {
 
     public SpriteBatch getSpriteBatch() {
         return batch;
-    }
-
-    public GameSceneManager getGsm() {
-        return gsm;
     }
 
     public OrthographicCamera getCamera() {
