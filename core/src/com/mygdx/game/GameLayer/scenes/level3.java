@@ -38,8 +38,8 @@ public class level3 extends GameScene {
         //music
         super.playGameMusic();
 
+        //create box2d world and set collision handler
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
-
         world.setContactListener(gsm.getEntityManager().getCollisionManager().getCollisionHandler());
 
 

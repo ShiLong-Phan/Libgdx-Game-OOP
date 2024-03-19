@@ -21,8 +21,10 @@ public class Player extends Entity {
 
     public Player(final World world, float x, float y, float width, float height, short cBits, short mBits, Body body) {
         super(world, x,y,width,height, 2, true,cBits, mBits, body, "player");
+        //flip for swapping sprite directions
         flip = true;
 
+        //set lives
         lives = 3;
 
         //resize img

@@ -17,10 +17,7 @@ public class EndScene extends GameScene {
 
     public EndScene(GameSceneManager gsm) {
         super(gsm);
-        /*
-        font = new BitmapFont();
-        layout = new GlyphLayout(font, title, Color.RED, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/5, true);
-        */
+
         super.playStartEndMusic();
 
         //resize bg image
@@ -39,6 +36,7 @@ public class EndScene extends GameScene {
     @Override
     public void update(float delta) {
         accumulator += delta;
+        //if any key is selected close the game
         if ((Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) && accumulator > 1) {
             //change scene
             System.out.println("Scene End\n");

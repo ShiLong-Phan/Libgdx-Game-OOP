@@ -21,10 +21,6 @@ import com.mygdx.game.GameEngine.scene.GameScene;
 
 public class StartScene extends GameScene {
 
-
-
-
-
     private Vector2 vec;
     private Texture backgroundTexture, playButton;
 
@@ -34,8 +30,6 @@ public class StartScene extends GameScene {
             super(gsm);
 
             super.playStartEndMusic();
-
-
 
             //vector to detect click position
             vec = new Vector2();
@@ -57,6 +51,7 @@ public class StartScene extends GameScene {
 
     @Override
     public void update(float delta) {
+        //check for mouse click and get position
         if (Gdx.input.isTouched()) {
             vec.x = Gdx.input.getX();
             vec.y = Gdx.input.getY();

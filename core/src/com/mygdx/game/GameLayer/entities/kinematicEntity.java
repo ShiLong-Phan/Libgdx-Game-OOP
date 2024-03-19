@@ -27,6 +27,7 @@ public class kinematicEntity extends Entity {
         //resize img
         Pixmap pixmap;
         Pixmap pixmapOriginal;
+        //if token select random sprite from tokenImages
         if(userdata == "token") {
             pixmapOriginal = new Pixmap(Gdx.files.internal(tokenImages.get(random)));
             pixmap = new Pixmap((int) width / 2, (int) height / 2, pixmapOriginal.getFormat());
@@ -36,6 +37,8 @@ public class kinematicEntity extends Entity {
             super.setTex(tex);
             pixmap.dispose();
             pixmapOriginal.dispose();
+
+            //if moving platform just set platform image
         }else if (userdata == "ground") {
             super.setX(x/PPM);
             super.setY(y/PPM);
@@ -47,6 +50,7 @@ public class kinematicEntity extends Entity {
             super.setTex(tex);
             pixmap.dispose();
             pixmapOriginal.dispose();
+            //if enemy thn set burger img
         } else if (userdata == "reset") {
             pixmapOriginal = new Pixmap(Gdx.files.internal("sprites/burger.png"));
             pixmap = new Pixmap((int) width / 2, (int) height / 2, pixmapOriginal.getFormat());

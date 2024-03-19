@@ -42,11 +42,14 @@ public class Application extends ApplicationAdapter {
         gsm = new GameSceneManager(this);
         System.out.println("Scene Manager Created");
 
+        //add immages for collection
         tokenImages.add("sprites/apple.png");
         tokenImages.add("sprites/watermelon.png");
         tokenImages.add("sprites/carrot.png");
         tokenImages.add("sprites/celery.png");
 
+
+        //set the files in lifecycle so that there is no errors when loading them in the game scenes
         tmr = new OrthogonalTiledMapRenderer[3];
 
         //lvl1

@@ -40,15 +40,17 @@ public class level2 extends GameScene {
         //music
         super.playGameMusic();
 
-
+        //create box2d world  and set collision handler
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
         world.setContactListener(gsm.getEntityManager().getCollisionManager().getCollisionHandler());
 
+        //create player
         player = gsm.getEntityManager().createPlayer(world, 25, 100, 20, 23, Constants.BIT_PLAYER, (short) (Constants.BIT_WALL| Constants.BIT_ENEMY));
 
-
+        //set map
         map = new TmxMapLoader().load("maps/map2.tmx");
 
+        //load map objects
         for (int i = 0; i < map.getLayers().size() - 1; i++) {
             gsm.getEntityManager().parseTileLayerEntities(world, map.getLayers().get(i + 1).getObjects(), i);
         }
