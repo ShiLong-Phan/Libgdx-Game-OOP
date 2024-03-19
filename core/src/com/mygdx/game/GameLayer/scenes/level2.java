@@ -123,7 +123,7 @@ public class level2 extends GameScene {
 
         update(Gdx.graphics.getDeltaTime());
         Constants.tmr[1].render();
-        if (gsm.getEntityManager().getPlayer().get(0).getTokens() == 0) {
+        if (player.getTokens() == 0) {
             accumulator2 += Gdx.graphics.getDeltaTime();
             if (accumulator2 > .5) {
                 musicPlayer.stop();

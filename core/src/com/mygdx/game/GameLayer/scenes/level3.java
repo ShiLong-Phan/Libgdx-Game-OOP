@@ -121,7 +121,7 @@ public class level3 extends GameScene {
 
         update(Gdx.graphics.getDeltaTime());
         Constants.tmr[2].render();
-        if (gsm.getEntityManager().getPlayer().get(0).getTokens() == 0 && accumulator > 0.5) {
+        if (player.getTokens() == 0 && accumulator > 0.5) {
             musicPlayer.stop();
             gsm.setState(GameSceneManager.Scene.END);
         }
