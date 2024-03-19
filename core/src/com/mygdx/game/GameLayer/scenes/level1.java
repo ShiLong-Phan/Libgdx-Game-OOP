@@ -41,15 +41,6 @@ public class level1 extends GameScene {
         //music
         super.playGameMusic();
 
-        b2dr = new Box2DDebugRenderer(
-                /*drawBodies*/true,
-                /*drawJoints*/false,
-                /*drawAABBs*/false,
-                /*drawInactiveBodies*/false,
-                /*drawVelocities*/false,
-                /*drawContacts*/false
-        );
-
         //create box2d world  and set collision handler
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
         world.setContactListener(gsm.getEntityManager().getCollisionManager().getCollisionHandler());
@@ -120,7 +111,6 @@ public class level1 extends GameScene {
 
         //render sprites >> map >> box2d
         update(Gdx.graphics.getDeltaTime());
-        b2dr.render(world, camera.combined.scl(Constants.PPM));
 
         //render first tiled map
         Constants.tmr[0].render();
