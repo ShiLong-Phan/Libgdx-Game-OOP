@@ -136,7 +136,6 @@ public class EntityManager implements entityBuilder {
                 Rectangle rect = rectObj.getRectangle();
                 Vector2 size = new Vector2((rect.x + rect.width / 2) / 2 / Constants.PPM,
                         (rect.y + rect.height / 2) / 2 / Constants.PPM);
-                System.out.println(size.x + "\t" + size.y);
                 createKinematicEntity(world, size, rect.width, rect.height, shape, Constants.BIT_ENEMY, Constants.BIT_PLAYER, userdata);
             } else {
 

@@ -62,7 +62,6 @@ public class level3 extends GameScene {
 
         //add moving platform
         Entity movingPlatform = gsm.getEntityManager().createKinematicEntity(world, 385,175 ,50,16, true, Constants.BIT_WALL, (short) (Constants.BIT_PLAYER | Constants.BIT_WALL), "ground");
-        System.out.println(movingPlatform.getTex());
 
         collectable = player.getTokens();
     }
