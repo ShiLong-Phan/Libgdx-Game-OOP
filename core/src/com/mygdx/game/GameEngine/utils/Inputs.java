@@ -28,6 +28,9 @@ public class Inputs {
     public static int AnyKey() {
         return Input.Keys.ANY_KEY;
     }
+    public static int escKey() {
+        return Input.Keys.ESCAPE;
+    }
 
 
 }

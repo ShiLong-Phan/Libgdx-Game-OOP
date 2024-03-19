@@ -39,6 +39,12 @@ public class IOManager {
         return false;
     }
 
+    public boolean backToLevelSelect(){
+        if(Gdx.input.isKeyPressed(Inputs.escKey()))
+            return true;
+        return false;
+    }
+
     public boolean anyInputs(){
         if (Gdx.input.isKeyPressed(Inputs.AnyKey()))
             return true;
