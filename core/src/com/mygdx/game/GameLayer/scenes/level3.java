@@ -36,7 +36,8 @@ public class level3 extends GameScene {
     public level3(GameSceneManager gsm) {
         super(gsm);
         //music
-        super.playGameMusic();
+        gsm.getIOManager().playGameMusic();
+
 
         //create box2d world and set collision handler
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
@@ -48,7 +49,7 @@ public class level3 extends GameScene {
         //resize bg image
         Pixmap pixmap;
         Pixmap pixmapOriginal = new Pixmap(Gdx.files.internal("backgrounds/Plain Background.png"));
-        pixmap = new Pixmap( (int) (Gdx.graphics.getWidth()/Application.SCALE), (int) (Gdx.graphics.getHeight()/Application.SCALE), pixmapOriginal.getFormat());
+        pixmap = new Pixmap((int) (Gdx.graphics.getWidth() / Application.SCALE), (int) (Gdx.graphics.getHeight() / Application.SCALE), pixmapOriginal.getFormat());
         pixmap.drawPixmap(pixmapOriginal, 0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(), 0, 0, pixmap.getWidth(), pixmap.getHeight());
         backgroundTexture = new Texture(pixmap);
         pixmap.dispose();
@@ -61,7 +62,7 @@ public class level3 extends GameScene {
 
 
         //add moving platform
-        Entity movingPlatform = gsm.getEntityManager().createKinematicEntity(world, 385,175 ,50,16, true, Constants.BIT_WALL, (short) (Constants.BIT_PLAYER | Constants.BIT_WALL), "ground");
+        Entity movingPlatform = gsm.getEntityManager().createKinematicEntity(world, 385, 175, 50, 16, true, Constants.BIT_WALL, (short) (Constants.BIT_PLAYER | Constants.BIT_WALL), "ground");
 
         collectable = player.getTokens();
     }
@@ -97,19 +98,24 @@ public class level3 extends GameScene {
         accumulator += delta;
         //if r key is pressed restart scene
         if (gsm.getIOManager().restartStage() && accumulator > 0.5) {
-            musicPlayer.stop();
+            gsm.getIOManager().stopMusic();
             gsm.setState(GameSceneManager.Scene.LEVEL3);
         }
         //if escape is pressed go back to level select
-        if (gsm.getIOManager().backToLevelSelect()  || player.getLives() == 0){
-            musicPlayer.stop();
+        if (gsm.getIOManager().backToLevelSelect() || player.getLives() == 0) {
+            gsm.getIOManager().stopMusic();
             gsm.setState(GameSceneManager.Scene.LEVELSELECT);
         }
 
         //for testing.
-        if(Gdx.input.isKeyPressed(Input.Keys.U) && accumulator > .3){
-            musicPlayer.stop();
+        if (Gdx.input.isKeyPressed(Input.Keys.U) && accumulator > .3) {
+            gsm.getIOManager().stopMusic();
             gsm.setState(GameSceneManager.Scene.LEVEL2);
+        }
+        //if token 0 thn go next stage
+        if (player.getTokens() == 0 && accumulator > 0.3) {
+            gsm.getIOManager().stopMusic();
+            gsm.setState(GameSceneManager.Scene.END);
         }
 
     }
@@ -120,10 +126,7 @@ public class level3 extends GameScene {
 
         update(Gdx.graphics.getDeltaTime());
         Constants.tmr[2].render();
-        if (player.getTokens() == 0 && accumulator > 0.5) {
-            musicPlayer.stop();
-            gsm.setState(GameSceneManager.Scene.END);
-        }
+
 
 
     }

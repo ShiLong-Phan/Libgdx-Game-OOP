@@ -39,7 +39,8 @@ public class level1 extends GameScene {
         super(gsm);
 
         //music
-        super.playGameMusic();
+        gsm.getIOManager().playGameMusic();
+
 
         //create box2d world  and set collision handler
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
@@ -94,13 +95,25 @@ public class level1 extends GameScene {
         accumulator += delta;
         //if r key is pressed restart scene
         if (gsm.getIOManager().restartStage() && accumulator > 0.5) {
-            musicPlayer.stop();
+            gsm.getIOManager().stopMusic();
             gsm.setState(GameSceneManager.Scene.LEVEL1);
         }
 
         if (gsm.getIOManager().backToLevelSelect()){
-            musicPlayer.stop();
+            gsm.getIOManager().stopMusic();
             gsm.setState(GameSceneManager.Scene.LEVELSELECT);
+        }
+
+        //for testing purposes go next stage
+        if (Gdx.input.isKeyPressed(Input.Keys.U) && accumulator > .3) {
+            gsm.getIOManager().stopMusic();
+            gsm.setState(GameSceneManager.Scene.LEVEL2);
+        }
+
+        //if token 0 thn go next stage
+        if (player.getTokens() == 0 && accumulator > 0.3) {
+            gsm.getIOManager().stopMusic();
+            gsm.setState(GameSceneManager.Scene.END);
         }
 
     }
@@ -115,32 +128,7 @@ public class level1 extends GameScene {
         //render first tiled map
         Constants.tmr[0].render();
 
-        if (player.getTokens() == 0) {
-            accumulator2 += Gdx.graphics.getDeltaTime();
-            if (accumulator2 > .5) {
-                musicPlayer.stop();
-                gsm.setState(GameSceneManager.Scene.LEVEL2);
-                System.out.println(1);
-            }
-        }
 
-        //restart stage
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            musicPlayer.stop();
-            gsm.setState(GameSceneManager.Scene.LEVEL1);
-        }
-
-        //go back to level select when lives == 0
-        if (gsm.getIOManager().backToLevelSelect() || player.getLives() == 0) {
-            musicPlayer.stop();
-            gsm.setState(GameSceneManager.Scene.LEVELSELECT);
-        }
-
-        //for testing purposes go next stage
-        if (Gdx.input.isKeyPressed(Input.Keys.U) && accumulator > .3) {
-            musicPlayer.stop();
-            gsm.setState(GameSceneManager.Scene.LEVEL2);
-        }
 
 
     }

@@ -25,7 +25,7 @@ public class LevelSelect extends GameScene {
     public LevelSelect(GameSceneManager gsm) {
         super(gsm);
         //play moosic
-        super.playStartEndMusic();
+        gsm.getIOManager().playStartEndMusic();
 
         batch = new SpriteBatch();
         //initialize and resize textures
@@ -64,7 +64,7 @@ public class LevelSelect extends GameScene {
 
                 //change scene
                 System.out.println("lvl 1 selected\n");
-                musicPlayer.stop();
+                gsm.getIOManager().stopMusic();
                 gsm.setState(GameSceneManager.Scene.LEVEL1);
             }
             //lvl2 selected
@@ -73,7 +73,7 @@ public class LevelSelect extends GameScene {
 
                 //change scene
                 System.out.println("lvl 2 selected\n");
-                musicPlayer.stop();
+                gsm.getIOManager().stopMusic();
                 gsm.setState(GameSceneManager.Scene.LEVEL2);
 
             }
@@ -82,7 +82,7 @@ public class LevelSelect extends GameScene {
                     vec.y > playbuttonY*2 - playButton[0].getHeight()*1.2 && vec.y < playbuttonY*2) {
                 //change scene
                 System.out.println("lvl 3 selected\n");
-                musicPlayer.stop();
+                gsm.getIOManager().stopMusic();
                 gsm.setState(GameSceneManager.Scene.LEVEL3);
             }
         }

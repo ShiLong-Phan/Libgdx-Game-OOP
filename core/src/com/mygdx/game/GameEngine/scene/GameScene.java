@@ -18,8 +18,6 @@ public abstract class GameScene {
     protected Application app;
     protected SpriteBatch batch;
     protected OrthographicCamera camera;
-    protected Music musicPlayer;
-
     protected BitmapFont font;
     protected String details = "";
     protected int fontSize = 22;
@@ -66,22 +64,6 @@ public abstract class GameScene {
         camera.update();
     }
 
-    protected void playStartEndMusic(){
-        if(this.musicPlayer != null)
-            musicPlayer.stop();
-        musicPlayer = Gdx.audio.newMusic(Gdx.files.internal("sound/A Very Brady Special.mp3"));
-        musicPlayer.setLooping(true);
-        musicPlayer.setVolume(0.03f);
-        musicPlayer.play();
-    }
 
-    protected void playGameMusic(){
-        if(this.musicPlayer != null)
-            musicPlayer.stop();
-        musicPlayer = Gdx.audio.newMusic(Gdx.files.internal("sound/Derp Nugget.mp3"));
-        musicPlayer.setLooping(true);
-        musicPlayer.setVolume(0.006f);
-        musicPlayer.play();
-    }
 
 }

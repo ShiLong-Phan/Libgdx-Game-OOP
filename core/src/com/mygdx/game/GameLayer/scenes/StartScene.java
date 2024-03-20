@@ -29,7 +29,7 @@ public class StartScene extends GameScene {
     public StartScene(GameSceneManager gsm) {
             super(gsm);
 
-            super.playStartEndMusic();
+            gsm.getIOManager().playStartEndMusic();
 
             //vector to detect click position
             vec = new Vector2();
@@ -60,7 +60,7 @@ public class StartScene extends GameScene {
 
                 //change scene
                 System.out.println("Scene Changed\n");
-                musicPlayer.stop();
+                gsm.getIOManager().stopMusic();
                 gsm.setState(GameSceneManager.Scene.LEVELSELECT);
             }
 

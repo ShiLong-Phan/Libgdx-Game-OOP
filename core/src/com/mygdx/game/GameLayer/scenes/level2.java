@@ -38,7 +38,8 @@ public class level2 extends GameScene {
     public level2(GameSceneManager gsm) {
         super(gsm);
         //music
-        super.playGameMusic();
+        gsm.getIOManager().playGameMusic();
+
 
         //create box2d world  and set collision handler
         world = new World(new Vector2(0, -9f), false); // y is gravity -10f for reallife
@@ -95,24 +96,30 @@ public class level2 extends GameScene {
 
         //if r key is pressed restart scene
         if (gsm.getIOManager().restartStage()) {
-            musicPlayer.stop();
+            gsm.getIOManager().stopMusic();
             gsm.setState(GameSceneManager.Scene.LEVEL2);
         }
 
         //if esc key pressed or lives == 0 back to level select
         if (gsm.getIOManager().backToLevelSelect() || player.getLives() == 0) {
-            musicPlayer.stop();
+            gsm.getIOManager().stopMusic();
             gsm.setState(GameSceneManager.Scene.LEVELSELECT);
         }
 
         //testing function to go next scene
         if (Gdx.input.isKeyPressed(Input.Keys.U) && accumulator > .3) {
-            musicPlayer.stop();
+            gsm.getIOManager().stopMusic();
             gsm.setState(GameSceneManager.Scene.LEVEL3);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.I) && accumulator > .3) {
-            musicPlayer.stop();
+            gsm.getIOManager().stopMusic();
             gsm.setState(GameSceneManager.Scene.LEVEL1);
+        }
+
+        //if token 0 thn go next stage
+        if (player.getTokens() == 0 && accumulator > 0.3) {
+            gsm.getIOManager().stopMusic();
+            gsm.setState(GameSceneManager.Scene.LEVEL3);
         }
 
     }
@@ -123,13 +130,7 @@ public class level2 extends GameScene {
 
         update(Gdx.graphics.getDeltaTime());
         Constants.tmr[1].render();
-        if (player.getTokens() == 0) {
-            accumulator2 += Gdx.graphics.getDeltaTime();
-            if (accumulator2 > .5) {
-                musicPlayer.stop();
-                gsm.setState(GameSceneManager.Scene.LEVEL3);
-            }
-        }
+
 
     }
 

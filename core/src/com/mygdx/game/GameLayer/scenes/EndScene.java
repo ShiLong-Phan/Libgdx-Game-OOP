@@ -18,7 +18,8 @@ public class EndScene extends GameScene {
     public EndScene(GameSceneManager gsm) {
         super(gsm);
 
-        super.playStartEndMusic();
+        gsm.getIOManager().playStartEndMusic();
+
 
         //resize bg image
         Pixmap pixmap;
