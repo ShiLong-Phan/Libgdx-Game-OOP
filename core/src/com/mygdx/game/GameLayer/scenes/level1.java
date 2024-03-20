@@ -113,7 +113,7 @@ public class level1 extends GameScene {
         //if token 0 thn go next stage
         if (player.getTokens() == 0 && accumulator > 0.3) {
             gsm.getIOManager().stopMusic();
-            gsm.setState(GameSceneManager.Scene.END);
+            gsm.setState(GameSceneManager.Scene.LEVEL2);
         }
 
     }
