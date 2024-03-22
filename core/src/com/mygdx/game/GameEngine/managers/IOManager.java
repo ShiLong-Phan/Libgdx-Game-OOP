@@ -63,7 +63,7 @@ public class IOManager {
             musicPlayer.stop();
         musicPlayer = Gdx.audio.newMusic(Gdx.files.internal("sound/Derp Nugget.mp3"));
         musicPlayer.setLooping(true);
-        musicPlayer.setVolume(0.006f);
+        musicPlayer.setVolume(0.008f);
         musicPlayer.play();
     }
 

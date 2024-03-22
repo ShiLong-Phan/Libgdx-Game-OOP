@@ -95,15 +95,15 @@ public class level1 extends GameScene {
         batch.end();
 
         accumulator += delta;
-        //if r key is pressed restart scene
-        if (gsm.getIOManager().restartStage() && accumulator > 0.5) {
-            gsm.getIOManager().stopMusic();
-            gsm.setState(GameSceneManager.Scene.LEVEL1);
-        }
-
-        if (gsm.getIOManager().backToLevelSelect()){
+        //if esc key pressed or lives == 0 back to level select
+        if (gsm.getIOManager().backToLevelSelect() || player.getLives() == 0) {
             gsm.getIOManager().stopMusic();
             gsm.setState(GameSceneManager.Scene.LEVELSELECT);
+        }
+
+        if (gsm.getIOManager().restartStage()){
+            gsm.getIOManager().stopMusic();
+            gsm.setState(GameSceneManager.Scene.LEVEL1);
         }
 
         //for testing purposes go next stage

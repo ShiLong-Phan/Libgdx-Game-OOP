@@ -43,7 +43,7 @@ public class kinematicEntity extends Entity {
             super.setX(x/PPM);
             super.setY(y/PPM);
             pixmapOriginal = new Pixmap(Gdx.files.internal("sprites/platform.png"));
-            pixmap = new Pixmap((int) width, (int) height, pixmapOriginal.getFormat());
+            pixmap = new Pixmap((int)  (width), (int)  (height), pixmapOriginal.getFormat());
             pixmap.drawPixmap(pixmapOriginal, 0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(), 0, 0, pixmap.getWidth(), pixmap.getHeight());
             Texture tex;
             tex = new Texture(pixmap);
@@ -75,7 +75,7 @@ public class kinematicEntity extends Entity {
         if (super.getTex() != null) {
             if (this instanceof kinematicEntity) {
                 if (super.getEntityData() == "ground") {
-                    batch.draw(tex, body.getPosition().x * PPM * - tex.getWidth() / Application.SCALE - 1,
+                    batch.draw(tex, body.getPosition().x * PPM - tex.getWidth() / Application.SCALE - 1,
                             body.getPosition().y * PPM - tex.getHeight() / Application.SCALE);
                 } else if (super.getEntityData() == "token") {
                     super.setX(x + body.getLinearVelocity().x /PPM / Application.SCALE);
