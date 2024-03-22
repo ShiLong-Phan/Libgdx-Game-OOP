@@ -12,6 +12,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setIdleFPS(60);
 		config.setTitle(Application.TITLE);
+		config.setResizable(false);
 		config.setWindowedMode(Application.V_WIDTH, Application.V_HEIGHT);
 		System.out.println("");
 		System.out.println("Lifecycle Started");

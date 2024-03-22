@@ -30,7 +30,7 @@ public class kinematicEntity extends Entity {
         //if token select random sprite from tokenImages
         if(userdata == "token") {
             pixmapOriginal = new Pixmap(Gdx.files.internal(tokenImages.get(random)));
-            pixmap = new Pixmap((int) width / 2, (int) height / 2, pixmapOriginal.getFormat());
+            pixmap = new Pixmap((int) (width / Application.SCALE), (int) (height / Application.SCALE), pixmapOriginal.getFormat());
             pixmap.drawPixmap(pixmapOriginal, 0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(), 0, 0, pixmap.getWidth(), pixmap.getHeight());
             Texture tex;
             tex = new Texture(pixmap);
@@ -53,7 +53,7 @@ public class kinematicEntity extends Entity {
             //if enemy thn set burger img
         } else if (userdata == "reset") {
             pixmapOriginal = new Pixmap(Gdx.files.internal("sprites/burger.png"));
-            pixmap = new Pixmap((int) width / 2, (int) height / 2, pixmapOriginal.getFormat());
+            pixmap = new Pixmap((int) (width / Application.SCALE), (int) (height / Application.SCALE), pixmapOriginal.getFormat());
             pixmap.drawPixmap(pixmapOriginal, 0, 0, pixmapOriginal.getWidth(), pixmapOriginal.getHeight(), 0, 0, pixmap.getWidth(), pixmap.getHeight());
             Texture tex;
             tex = new Texture(pixmap);
@@ -75,18 +75,18 @@ public class kinematicEntity extends Entity {
         if (super.getTex() != null) {
             if (this instanceof kinematicEntity) {
                 if (super.getEntityData() == "ground") {
-                    batch.draw(tex, body.getPosition().x * PPM - tex.getWidth() / 2 - 1,
-                            body.getPosition().y * PPM - tex.getHeight() / 2);
+                    batch.draw(tex, body.getPosition().x * PPM * - tex.getWidth() / Application.SCALE - 1,
+                            body.getPosition().y * PPM - tex.getHeight() / Application.SCALE);
                 } else if (super.getEntityData() == "token") {
-                    super.setX(x + body.getLinearVelocity().x /PPM / 2);
-                    super.setY(y + body.getLinearVelocity().y /PPM / 2);
-                    batch.draw(tex, x * PPM - tex.getWidth() / 2 - 1,
-                            y * PPM - tex.getHeight() / 2);
+                    super.setX(x + body.getLinearVelocity().x /PPM / Application.SCALE);
+                    super.setY(y + body.getLinearVelocity().y /PPM / Application.SCALE);
+                    batch.draw(tex, x * PPM - tex.getWidth() / Application.SCALE - 1,
+                            y * PPM - tex.getHeight() / Application.SCALE);
                 } else if (super.getEntityData() == "reset") {
-                    super.setX(x + body.getLinearVelocity().x / PPM / 2);
-                    super.setY(y + body.getLinearVelocity().y / PPM / 2);
-                    batch.draw(tex, x * PPM - tex.getWidth() / 2 - 1,
-                            y * PPM - tex.getHeight() / 2);
+                    super.setX(x + body.getLinearVelocity().x / PPM / Application.SCALE);
+                    super.setY(y + body.getLinearVelocity().y / PPM / Application.SCALE);
+                    batch.draw(tex, x * PPM - tex.getWidth() / Application.SCALE - 1,
+                            y * PPM - tex.getHeight() / Application.SCALE);
                 }
             }
         }

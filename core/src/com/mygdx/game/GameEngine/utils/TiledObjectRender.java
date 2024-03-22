@@ -28,10 +28,10 @@ public class TiledObjectRender {
     public static PolygonShape createRectangle(RectangleMapObject rectangleObject) {
         Rectangle rectangle = rectangleObject.getRectangle();
         PolygonShape polygon = new PolygonShape();
-        Vector2 size = new Vector2((rectangle.x + rectangle.width / 2) / 2 / Constants.PPM,
-                (rectangle.y + rectangle.height / 2) / 2 / Constants.PPM);
-        polygon.setAsBox((rectangle.width / 2) / 2 / Constants.PPM,
-                (rectangle.height / 2) / 2 / Constants.PPM,
+        Vector2 size = new Vector2((rectangle.x + rectangle.width / 2) / Application.SCALE / Constants.PPM,
+                (rectangle.y + rectangle.height / 2) / Application.SCALE / Constants.PPM);
+        polygon.setAsBox((rectangle.width / 2) / Application.SCALE / Constants.PPM,
+                (rectangle.height / 2) / Application.SCALE / Constants.PPM,
                 size,
                 0.0f);
         return polygon;
@@ -41,7 +41,7 @@ public class TiledObjectRender {
         float[] vertices = polygonObject.getPolygon().getTransformedVertices();
         float[] worldVertices = new float[vertices.length];
         for (int i = 0; i < vertices.length; ++i) {
-            worldVertices[i] = vertices[i] / 2 / Constants.PPM;
+            worldVertices[i] = vertices[i] / Application.SCALE / Constants.PPM;
         }
 
         PolygonShape polygon = new PolygonShape();
@@ -52,8 +52,8 @@ public class TiledObjectRender {
     public static CircleShape getCircle(CircleMapObject circleObject) {
         Circle circle = circleObject.getCircle();
         CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(circle.radius / 2 / Constants.PPM);
-        circleShape.setPosition(new Vector2(circle.x /2 / Constants.PPM, circle.y / 2 / Constants.PPM));
+        circleShape.setRadius(circle.radius / Application.SCALE / Constants.PPM);
+        circleShape.setPosition(new Vector2(circle.x / Application.SCALE / Constants.PPM, circle.y / Application.SCALE / Constants.PPM));
         return circleShape;
     }
 

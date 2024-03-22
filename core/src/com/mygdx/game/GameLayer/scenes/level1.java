@@ -18,6 +18,8 @@ import com.mygdx.game.GameEngine.scene.GameScene;
 import com.mygdx.game.GameEngine.utils.Constants;
 import com.mygdx.game.GameLayer.entities.Player;
 
+import static com.mygdx.game.GameEngine.utils.Constants.tmr;
+
 public class level1 extends GameScene {
 
     private World world;
@@ -58,7 +60,7 @@ public class level1 extends GameScene {
         pixmap.dispose();
         pixmapOriginal.dispose();
 
-        map = new TmxMapLoader().load("maps/map1.tmx");
+        map = tmr[0].getMap();
         for (int i = 0; i < map.getLayers().size() - 1; i++) {
             //skip layer 0 as it is just a tile layer with no objs
             gsm.getEntityManager().parseTileLayerEntities(world, map.getLayers().get(i + 1).getObjects(), i);
@@ -126,7 +128,7 @@ public class level1 extends GameScene {
         update(Gdx.graphics.getDeltaTime());
 
         //render first tiled map
-        Constants.tmr[0].render();
+        tmr[0].render();
 
 
 
@@ -138,7 +140,7 @@ public class level1 extends GameScene {
         System.out.println("Scene Disposed");
         world.dispose();
         gsm.getEntityManager().dispose();
-        map.dispose();
+        //map.dispose();
 
     }
 }
